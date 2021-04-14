@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Title from '../components/Title';
 import Content from '../components/Content' ;
 import UploadImage from '../components/UploadImage';
+import Card from '../components/Card.js'
 
 const Container = styled.form`
   width: calc(100% - 2em);
@@ -17,13 +18,7 @@ export default function Home() {
   return (
     <Container>
       <Header />
-      <div style={{height: "175px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between"}}>
-        <Title />
-        <Content />
-        <UploadImage />
-      </div>
-      
-
+      <Card />
       <Footer />
     </Container>
   )

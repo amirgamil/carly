@@ -1,24 +1,10 @@
 
 
-function ViewLetter({ letter }) {
-    return (
-        <div>
-            <h2>${letter.person}</h2> 
-            <div class ="wrapper block">
-                <div class="image wrapper block">
-                    {/* <img src = `` /> */}
-                </div> 
-                <p style= {{ whiteSpace: "pre-line"}}>
-                  ${letter.message}
-                </p>
-            </div>
-        </div>
-    )
-}
 
 //Statically generate card URLs that have already been created, pre-render page from props returned
-export async function getStaticProps(context) {
-    //sort this out - load data from the MongoDB database
+export async function getServerSideProps(context) {
+    //sort this out - load data directly from the MongoDB database
+    //don't fetch! This is run on the server :)
     const res = await fetch("/api/" + encodeURIComponent(context.params.hash));
     const data = await res.json();
 
@@ -38,4 +24,20 @@ export async function getStaticProps(context) {
     return {
         props: { data }, //will be passed into page component as props
     }
+}
+
+export default function ViewLetter({ letter }) {
+    return (
+        <div>
+            <h2>${letter.person}</h2> 
+            <div class ="wrapper block">
+                <div class="image wrapper block">
+                    {/* <img src = `` /> */}
+                </div> 
+                <p style= {{ whiteSpace: "pre-line"}}>
+                  ${letter.message}
+                </p>
+            </div>
+        </div>
+    )
 }

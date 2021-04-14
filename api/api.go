@@ -1,14 +1,6 @@
-package main
+package api
 
 import (
-	// "encoding/json"
-	// "io"
-	// "io/ioutil"
-	// "log"
-	// "net/http"
-	// "os"
-	// "time"
-
 	"log"
 	"net/http"
 	"time"
@@ -16,7 +8,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func doSomething(w http.ResponseWriter, r *http.Request) {
+func writeToDatabase(w http.ResponseWriter, r *http.Request) {
 
 }
 
