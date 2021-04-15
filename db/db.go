@@ -11,10 +11,10 @@ import (
 const TitleLimit = 100
 const ContentLimit = 100000
 
-func initDB() {
+func init() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Warnf("Error loading .env file: %s", err.Error())
+		fmt.Println("Error loading .env file: %s", err.Error())
 		panic(err)
 	}
 
@@ -23,10 +23,44 @@ func initDB() {
 	mIP := os.Getenv("MONGO_SHARD_URL")
 
 	initSession(mUser, mPass, mIP)
+	fmt.Println(letters)
+}
+
+func AddNew(title string, content string, person string, image string) {
+	titleArr := []byte(title)
+	err := checkLengths(title, content)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	urlHash := security.GenerateUniqueHash(string(titleArr[:20]))
+	fmt.Println(urlHash)
+
+	new := Letter{
+		Hash:    urlHash,
+		Title:   title,
+		Message: content,
+		Person:  person,
+		Image:   image,
+	}
+	fmt.Printf("%+v\n", new)
+
+	//bunch of checks for password and stuff
+	insertErr := insert(new)
+	if insertErr != nil {
+		fmt.Println("Error inserting a new letter in the db: ", insertErr)
+	}
 
 }
 
-func AddNew(title string, message string, person string, image string) {
-	urlHash := security.GenerateUniqueHash(string[:20])
-	fmt.Println(urlHash)
+func checkLengths(title string, content string) error {
+	if len(title) > TitleLimit {
+		return fmt.Errorf("title is longer than character limit of %d\n", TitleLimit)
+	}
+	if len(content) > ContentLimit {
+		return fmt.Errorf("content is longer than character limit of %d\n", ContentLimit)
+	}
+
+	return nil
 }

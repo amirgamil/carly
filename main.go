@@ -1,7 +1,6 @@
 package main
 
 import (
-	"api"
 	"log"
 	"net/http"
 	"time"
@@ -29,8 +28,9 @@ func main() {
 		ReadTimeout:  60 * time.Second,
 	}
 
+	r.Methods("POST").Path("/api").HandlerFunc(api.WriteDB)
 	r.Methods("GET").Path("/api/{hash}").HandlerFunc(api.ReadDB)
-	r.Methods("POST").Path("/api/{hash}").HandlerFunc(api.WriteDB)
+	http.Handle("/", r)
 
 	log.Printf("Server listening on %s\n", srv.Addr)
 	log.Fatal(srv.ListenAndServe())
