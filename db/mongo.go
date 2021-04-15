@@ -6,7 +6,10 @@ import (
 	"github.com/globalsign/mgo"
 )
 
-func init(user string, pass string, ip string) {
+var Session *mgo.Session
+var letters *mgo.Collection
+
+func initSession(user string, pass string, ip string) {
 	// load .env file
 	URIfmt := "mongodb://127.0.0.1:27017" //eventually add user and password
 
@@ -15,12 +18,19 @@ func init(user string, pass string, ip string) {
 		log.Warn("Falling back on env vars...")
 	}
 
-	session, err := mgo.Dial(URIfmt)
+	Session, err := mgo.Dial(URIfmt)
 	if err != nil {
 		log.Warnf("Error starting Mongo session")
 	}
 
-	c := session.DB("test").C("people")
+	uniqueHash := mgo.Index{
+		Key:    []string{"hash"},
+		Unique: true,
+	}
+
+	//ensure key is unique with mgo.EnsureIndex
+	//establishes connection to letters database only if unique key
+	letters := Session.DB("main").C("letters").EnsureIndex(uniqueHash)
 }
 
 func main() {

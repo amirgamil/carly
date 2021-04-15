@@ -1,29 +1,31 @@
 package api
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
-	"github.com/gorilla/mux"
+	"github.com/amirgamil/carly/db"
 )
 
-func writeToDatabase(w http.ResponseWriter, r *http.Request) {
-
+type letter struct {
+	hash    string
+	title   string
+	message string
+	person  string
+	image   string
 }
 
-func main() {
-	r := mux.NewRouter()
-
-	srv := &http.Server{
-		Handler:      r,
-		Addr:         "127.0.0.1:8998",
-		WriteTimeout: 60 * time.Second,
-		ReadTimeout:  60 * time.Second,
+func WriteDB(w http.ResponseWriter, r *http.Request) {
+	var letterToWrite letter
+	err := json.NewDecoder(r).Decode(&letterToWrite)
+	if err != nil {
+		log.Fatal("Error parsing the JSON to create a new letter")
 	}
+	//make a call to db with letter to write
+	db.AddNew(letterToWrite.title, letterToWrite.message, letterToWrite.person, letterToWrite.image)
+}
 
-	r.HandleFunc("/api/{hash}")
+func ReadDB(w http.ResponseWriter, r *http.Request) {
 
-	log.Printf("Server listening on %s\n", srv.Addr)
-	log.Fatal(srv.ListenAndServe())
 }

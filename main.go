@@ -1,48 +1,37 @@
 package main
 
 import (
-	// "encoding/json"
-	// "io"s
-	// "io/ioutil"
-	// "log"
-	// "net/http"
-	// "os"
-	// "time"
+	"api"
+	"log"
+	"net/http"
+	"time"
 
-	"fmt"
-
-	"github.com/globalsign/mgo"
+	"github.com/amirgamil/carly/api"
+	"github.com/gorilla/mux"
 )
 
-type Person struct {
-	Name  string
-	Phone string
-}
+// "encoding/json"
+// "io"s
+// "io/ioutil"
+// "log"
+// "net/http"
+// "os"
+// "time"
 
 func main() {
 
-	URIfmt := "mongodb://127.0.0.1:27017" //eventually add user and password
+	r := mux.NewRouter()
 
-	session, err := mgo.Dial(URIfmt)
-	if err != nil {
-		panic(err)
+	srv := &http.Server{
+		Handler:      r,
+		Addr:         "127.0.0.1:8998",
+		WriteTimeout: 60 * time.Second,
+		ReadTimeout:  60 * time.Second,
 	}
 
-	c := session.DB("test").C("people")
-	err = c.Insert(&Person{"Ale", "+55 53 8116 9639"})
-	if err != nil {
-		fmt.Println(err)
-	}
-	// r := mux.NewRouter()
-	// srv := &http.Server{
-	// 	Handler:      r,
-	// 	Addr:         "127.0.0.1:8998",
-	// 	WriteTimeout: 60 * time.Second,
-	// 	ReadTimeout:  60 * time.Second,
-	// }
+	r.Methods("GET").Path("/api/{hash}").HandlerFunc(api.ReadDB)
+	r.Methods("POST").Path("/api/{hash}").HandlerFunc(api.WriteDB)
 
-	// // r.HandleFunc("/api/{hash}")
-
-	// log.Printf("Server listening on %s\n", srv.Addr)
-	// log.Fatal(srv.ListenAndServe())
+	log.Printf("Server listening on %s\n", srv.Addr)
+	log.Fatal(srv.ListenAndServe())
 }
