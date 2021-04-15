@@ -5,7 +5,7 @@
 export async function getServerSideProps(context) {
     //sort this out - load data directly from the MongoDB database
     //don't fetch! This is run on the server :)
-    const res = await fetch("/api/" + encodeURIComponent(context.params.hash));
+    const res = await fetch("127.0.0.1:8998/api/" + encodeURIComponent(context.params.hash));
     const data = await res.json();
 
     if (!data) {

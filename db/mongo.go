@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/globalsign/mgo"
+	"github.com/globalsign/mgo/bson"
 )
 
 var Session *mgo.Session
@@ -34,4 +35,17 @@ func initSession(user string, pass string, ip string) {
 
 func insert(new Letter) error {
 	return letters.Insert(new)
+}
+
+//look up hash string in the database
+func fetch(hash string) Letter {
+	//create BSON object of hash string to look for in the database
+	lookFor := bson.M{"hash": hash}
+
+	var result Letter
+	err := letters.Find(lookFor).One(&result)
+	if err != nil {
+		fmt.Println("Error looking for hash key in db %s", err)
+	}
+	return result
 }

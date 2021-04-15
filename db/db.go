@@ -46,7 +46,7 @@ func AddNew(title string, content string, person string, image string) {
 	}
 	fmt.Printf("%+v\n", new)
 
-	//bunch of checks for password and stuff
+	//TODO: bunch of checks for password and stuff
 	insertErr := insert(new)
 	if insertErr != nil {
 		fmt.Println("Error inserting a new letter in the db: ", insertErr)
@@ -63,4 +63,8 @@ func checkLengths(title string, content string) error {
 	}
 
 	return nil
+}
+
+func LookUp(hash string) Letter {
+	return fetch(hash)
 }
