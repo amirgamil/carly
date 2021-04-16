@@ -38,7 +38,7 @@ func insert(new Letter) error {
 }
 
 //look up hash string in the database
-func fetch(hash string) Letter {
+func fetch(hash string) (Letter, error) {
 	//create BSON object of hash string to look for in the database
 	lookFor := bson.M{"hash": hash}
 

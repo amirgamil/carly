@@ -83,6 +83,11 @@ textarea,
   visibility: hidden;
 }
 
+section h2 {
+  /*allows highligh to just cover length of element*/
+  display: inline-block;
+}
+
 section h2::after {
   position: absolute;
   bottom: 0;
@@ -92,7 +97,7 @@ section h2::after {
   border-radius: 3px;
   content: '';
   display: block;
-  height: 50%;
+  height: 30%;
   width: 100%;
   background: var(--bg);
   z-index: -1;
@@ -114,14 +119,17 @@ section h2::after {
   transform: rotate(-1deg);
 }
 
+.main {
+  padding: 20px !important;
+}
 
 .image {
   transform: rotate(-3deg);
   width: 206px;
   height: 206px;
   padding: 0 !important;
-  margin-top: -30px !important;
-  margin-left: 20px !important;
+  margin-top: -50px !important;
+  margin-left: 10px !important;
 }
 
 
@@ -131,6 +139,9 @@ section h2::after {
   padding: 0 !important;
 }
 
+.person {
+  padding-bottom: 10px;
+}
 
 @media (max-width: 751px) {
   .letterCard {

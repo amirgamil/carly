@@ -65,6 +65,6 @@ func checkLengths(title string, content string) error {
 	return nil
 }
 
-func LookUp(hash string) Letter {
+func LookUp(hash string) (Letter, error) {
 	return fetch(hash)
 }

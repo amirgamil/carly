@@ -27,11 +27,11 @@ func ReadDB(w http.ResponseWriter, r *http.Request) {
 	// Allow CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	vars := mux.Vars(r)
-
+	fmt.Println(vars["hash"])
 	res, err := db.LookUp(vars["hash"])
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Println("Couldn't find the letter in the db,  %s", err)
+		fmt.Println("Couldn't find the letter for %s", vars["hash"])
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

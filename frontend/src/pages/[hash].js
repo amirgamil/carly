@@ -1,11 +1,11 @@
-
-//Statically generate card URLs that have already been created, pre-render page from props returned
-export async function getServerSideProps(context) {
+import getLetter from '../http/getLetter'
+//Generate card URLs by making a request to the server, pre-render page from props returned
+export async function getServerSideProps(ctx) {
     //sort this out - load data directly from the MongoDB database
     //don't fetch! This is run on the server :)
-    const res = await fetch("127.0.0.1:8998/api/" + encodeURIComponent(context.params.hash));
-    const data = await res.json();
-
+    console.log("here")
+    const res = await getLetter(encodeURIComponent(ctx.params.hash));
+    console.log("success");
     if (!data) {
         return {
             notFound: true,
@@ -27,12 +27,12 @@ export async function getServerSideProps(context) {
 export default function ViewLetter({ letter }) {
     return (
         <div className="letterCard">
-            <h2>{letter.person}</h2> 
-            <div className ="wrapper block">
+            <h2 className="person">{letter.person}</h2> 
+            <div className ="wrapper block main">
                 <div className="image wrapper block">
                     <img className = "img" src={letter.image} />
                 </div> 
-                <p style= {{ whiteSpace: "pre-line"}}>
+                <p style= {{ whiteSpace: "pre-line", marginTop: "15px"}}>
                   {letter.message}
                 </p>
             </div>
