@@ -7,8 +7,10 @@ import Title from '../components/Title';
 import Content from '../components/Content' ;
 import UploadImage from '../components/UploadImage';
 import Card from '../components/Card.js'
+import Intro from '../components/Intro.js'
 
 const Container = styled.form`
+  max-width: 800px;
   width: calc(100% - 2em);
   margin: 0 auto;
 `;
@@ -16,10 +18,13 @@ const Container = styled.form`
 
 export default function Home() {
   return (
-    <Container>
+    <>
       <Header />
-      <Card />
+      <Intro />
+      <Container>
+        <Card />
+      </Container>
       <Footer />
-    </Container>
+    </>
   )
 }

@@ -1,6 +1,4 @@
 
-
-
 //Statically generate card URLs that have already been created, pre-render page from props returned
 export async function getServerSideProps(context) {
     //sort this out - load data directly from the MongoDB database
@@ -28,14 +26,14 @@ export async function getServerSideProps(context) {
 
 export default function ViewLetter({ letter }) {
     return (
-        <div>
-            <h2>${letter.person}</h2> 
-            <div class ="wrapper block">
-                <div class="image wrapper block">
-                    {/* <img src = `` /> */}
+        <div className="letterCard">
+            <h2>{letter.person}</h2> 
+            <div className ="wrapper block">
+                <div className="image wrapper block">
+                    <img className = "img" src={letter.image} />
                 </div> 
                 <p style= {{ whiteSpace: "pre-line"}}>
-                  ${letter.message}
+                  {letter.message}
                 </p>
             </div>
         </div>

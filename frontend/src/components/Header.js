@@ -3,8 +3,11 @@
 export default function Header() {
     return (
         <header>
-            <h1>Carly</h1>
-            <p>Generate beautiful cards to share with your loved ones</p>
+            <h2 className = "block">Carly</h2>
+            <nav>
+                <a className = "block">View Source</a>
+                <a className = "block">Made by Amir</a>
+            </nav>
         </header>
         
     )

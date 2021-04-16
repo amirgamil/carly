@@ -2,15 +2,34 @@ html,
 body {
   padding: 0;
   margin: 0 auto;
-  max-width: 800px;
-  width: calc(100% - 2em);
+  --fg: #010100;
+  --bg: #f9f2e3;
+
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+header {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  width: 100%;
+  border-bottom: 1px solid black;
+  justify-content: space-between;
+  background: var(--bg);
+  color: var(--fg);
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 
 footer, header {
   text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
 }
 
 a {
@@ -21,3 +40,102 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/*CSS for index.js*/
+
+.block-body {
+  display: flex;
+  position: relative;
+  width: 100%;
+  background-color: red;
+  margin: auto;
+}
+
+textarea {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  resize: none;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  position: absolute;
+}
+
+input, textarea, .p-heights {
+  padding: 1.5em;
+  width: 100% !important
+}
+
+textarea,
+.p-heights {
+    box-sizing: border-box;
+    color: var(--fg);
+    min-height: 3em;
+    line-height: 1.5em;
+    margin: 0;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.p-heights {
+  visibility: hidden;
+}
+
+section h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 4px;
+  transform: translateX(-4px);
+  border-radius: 3px;
+  content: '';
+  display: block;
+  height: 50%;
+  width: 100%;
+  background: var(--bg);
+  z-index: -1;
+}
+
+/*CSS for [hash].js*/
+.letterCard {
+  --fg: #010100;
+  --bg: #f9f2e3;
+
+  background: var(--bg);
+  color: var(--fg);
+
+  max-width: 800px;
+  width: calc(100% - 4em);
+  margin: 0 auto;
+  padding: 1em;
+  border: 1px solid black;
+  transform: rotate(-1deg);
+}
+
+
+.image {
+  transform: rotate(-3deg);
+  width: 206px;
+  height: 206px;
+  padding: 0 !important;
+  margin-top: -30px !important;
+  margin-left: 20px !important;
+}
+
+
+.img {
+  height: 200px;
+  width: 200px;
+  padding: 0 !important;
+}
+
+
+@media (max-width: 751px) {
+  .letterCard {
+    rotate: (0deg);
+  }
+}
+
+

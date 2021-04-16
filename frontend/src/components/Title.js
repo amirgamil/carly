@@ -7,11 +7,14 @@ const TitleInput = styled.input`
     padding: 0.5em;
 `;
 
-export default function Title() {
+const Title = (props) => {
     const [title, setTitle] = useState('');
 
     return (
-        <TitleInput placeholder="Enter the title of the card"
+        <TitleInput placeholder={props.placeholderTxt}
         onInput={(evt) => setTitle(evt.target.value)} value = {title} />
     )
 }
+
+
+export default Title;

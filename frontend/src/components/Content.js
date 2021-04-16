@@ -11,7 +11,10 @@ export default function Content() {
     const [content, setContent] = useState('');
 
     return (
-        <TextInput placeholder = "Enter the body of the message"
-        onInput={(evt) => setContent(evt.target.value)} value = {content} />
+        <div class = "block-body">
+            <TextInput className = "editor" placeholder = "Enter the body of the message"
+            onInput={(evt) => setContent(evt.target.value)} value = {content} />
+            <div class = "p-heights">{content}</div>
+        </div>
     )
 }

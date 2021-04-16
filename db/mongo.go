@@ -44,8 +44,5 @@ func fetch(hash string) Letter {
 
 	var result Letter
 	err := letters.Find(lookFor).One(&result)
-	if err != nil {
-		fmt.Println("Error looking for hash key in db %s", err)
-	}
-	return result
+	return result, err
 }
