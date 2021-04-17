@@ -31,7 +31,7 @@ export default function Intro() {
                     </button>
                 </div>
             </section>   
-            <ViewLetter style={{padding: "1em"}} letter = {tempData}/>
+            <ViewLetter style={{padding: "1em"}} template = {true} data = {tempData}/>
         </>
     )
 }
