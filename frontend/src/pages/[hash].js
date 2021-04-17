@@ -1,6 +1,7 @@
 import getLetter from '../https/getLetter'
 import styled from 'styled-components'
 import Letter from '../components/Letter'
+import Footer from '../components/Footer'
 
 //Generate card URLs by making a request to the server, pre-render page from props returned
 export async function getServerSideProps(ctx) {
@@ -39,6 +40,7 @@ const ViewLetter = ({ data }) => {
     return (
         <Main>
             <Letter template = {false} data={data}/>
+            <Footer />
         </Main>
     )
 }

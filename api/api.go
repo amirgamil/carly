@@ -20,7 +20,13 @@ func WriteDB(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("Error parsing the JSON to create a new letter %s", err)
 	}
 	//make a call to db with letter to write
-	db.AddNew(letterToWrite.Title, letterToWrite.Message, letterToWrite.Person, letterToWrite.Image)
+	urlHash := db.AddNew(letterToWrite.Title, letterToWrite.Message, letterToWrite.Person, letterToWrite.Image)
+	toReturn := map[string]string{
+		"hash": urlHash,
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(toReturn)
+
 }
 
 func ReadDB(w http.ResponseWriter, r *http.Request) {

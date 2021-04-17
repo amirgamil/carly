@@ -26,7 +26,7 @@ func init() {
 	fmt.Println(letters)
 }
 
-func AddNew(title string, content string, person string, image string) {
+func AddNew(title string, content string, person string, image string) string {
 	titleArr := []byte(title)
 	err := checkLengths(title, content)
 	if err != nil {
@@ -51,6 +51,7 @@ func AddNew(title string, content string, person string, image string) {
 	if insertErr != nil {
 		fmt.Println("Error inserting a new letter in the db: ", insertErr)
 	}
+	return urlHash
 
 }
 

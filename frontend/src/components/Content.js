@@ -7,14 +7,12 @@ const TextInput = styled.textarea`
     padding: 1em;
 `;
 
-export default function Content() {
-    const [content, setContent] = useState('');
-
+export default function Content({placeholderTxt, content, onchange}) {
     return (
-        <div class = "block-body">
-            <TextInput className = "editor" placeholder = "Enter the body of the message"
-            onInput={(evt) => setContent(evt.target.value)} value = {content} />
-            <div class = "p-heights">{content}</div>
+        <div className = "block-body">
+            <TextInput className = "editor" placeholder = {placeholderTxt}
+            onChange={(evt) => onchange(evt.target.value)} value = {content} />
+            <div className = "p-heights">{content}</div>
         </div>
     )
 }

@@ -20,17 +20,18 @@ export default function Intro() {
     return (
         <>
             <section style={{margin: "0 auto", width: "100%", textAlign: "center", padding: "1em"}}>
-                <h1 style = {{fontSize: "3em"}}>Generate a beautiful card that can be shared in seconds</h1>
-                <h2 style={{fontSize: "2em", position: "relative"}}>
+                <h1 style = {{fontSize: "3em"}}>Generate a beautiful card for any occasion that can be shared in seconds</h1>
+                <h2 style={{fontSize: "2em", marginTop: "-2em", position: "relative" }}>
                     Open it in your browser!
                 </h2>
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                     <button className="block" style={{fontSize: "1em"}}>
                         Make one
                     </button>
-                    <button className="block" style={{fontSize: "1em"}}>
+                    {/*TODO: ADD LINK*/}
+                    <a href="add link" className="block" style={{fontSize: "1em"}}>
                         See an example
-                    </button>
+                    </a>
                 </div>
             </section>   
             <Letter style={{padding: "1em"}} template = {true} data = {tempData}/>

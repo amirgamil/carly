@@ -19,6 +19,7 @@ export default function Home() {
       <Intro />
       <Container>
         <Card />
+        <hr style={{borderBottom: "4px dotted var(--fg)", border: "0px", marginTop: "20px", display: "block"}}></hr>
       </Container>
       <Footer />
     </>

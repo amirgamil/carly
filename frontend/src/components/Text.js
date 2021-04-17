@@ -7,12 +7,10 @@ const TitleInput = styled.input`
     padding: 0.5em;
 `;
 
-const Title = (props) => {
-    const [title, setTitle] = useState('');
-
+const Title = ({placeholderTxt, value, onchange}) => {
     return (
-        <TitleInput placeholder={props.placeholderTxt}
-        onInput={(evt) => setTitle(evt.target.value)} value = {title} />
+        <TitleInput placeholder={placeholderTxt}
+        onChange={evt => onchange(evt.target.value)} value = {value} />
     )
 }
 

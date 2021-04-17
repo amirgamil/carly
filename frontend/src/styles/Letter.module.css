@@ -1,0 +1,46 @@
+.image {
+    transform: rotate(-3deg);
+    width: 206px;
+    height: 206px;
+    padding: 0 !important;
+    margin-top: -50px !important;
+    margin-left: 10px !important;
+}
+
+.img {
+    height: 200px;
+    width: 200px;
+    padding: 0 !important;
+}
+  
+.person {
+    padding-bottom: 10px;
+}
+  
+@media (max-width: 751px) {
+    .letterCard {
+        rotate: (0deg);
+    }
+}
+  
+.letterCard {
+    background: var(--bg);
+    color: var(--fg);
+  
+    max-width: 800px;
+    width: calc(100% - 4em);
+    margin: 0 auto;
+    padding: 1em !important;
+}
+  
+  
+.template {
+    border: 1px solid black;
+    transform: rotate(-1deg);
+}
+  
+.bodyLetter {
+    padding: 20px !important;
+    width: calc(100% - 1em);
+}
+    
