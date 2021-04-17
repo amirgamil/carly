@@ -1,9 +1,11 @@
 import ViewLetter from '../pages/[hash].js'
+import Letter from '../components/Letter'
 
 export default function Intro() {
     const tempData = {
         person: "Riley",
         message: `Dear Molly, 
+        
                   Thanks for being the best friend I could ask for. 
                   
                   You're always there for me and make me feel special. I'm incredibly grateful that
@@ -31,7 +33,7 @@ export default function Intro() {
                     </button>
                 </div>
             </section>   
-            <ViewLetter style={{padding: "1em"}} template = {true} data = {tempData}/>
+            <Letter style={{padding: "1em"}} template = {true} data = {tempData}/>
         </>
     )
 }

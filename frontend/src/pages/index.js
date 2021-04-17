@@ -1,11 +1,7 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import styled from 'styled-components';
-import Title from '../components/Title';
-import Content from '../components/Content' ;
-import UploadImage from '../components/UploadImage';
 import Card from '../components/Card.js'
 import Intro from '../components/Intro.js'
 
