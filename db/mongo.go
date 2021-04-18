@@ -25,6 +25,11 @@ func initSession(user string, pass string, ip string) {
 		Unique: true,
 	}
 
+	sessionTTL := mgo.Index{
+		Key:         []string{"expiry"},
+		ExpireAfter: 0,
+	}
+
 	//create index with hash ready to put new elements in
 	//establishes connection to letters database only if unique key
 	_ = Session.DB("main").C("letters").EnsureIndex(uniqueHash)

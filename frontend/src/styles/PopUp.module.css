@@ -1,14 +1,23 @@
 
 
 .modal {
-    display: none;
     position: fixed;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 5;
+    background-color: var(--bg);
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 
 .modalContent {
     background-color: white;
     position: absolute;
+    width: 300px;
+    padding: 20px !important;
+    top: calc(50% - 150px);
+    left: calc(50% - 150px);
+    border: 1px solid black;
 }

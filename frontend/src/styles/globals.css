@@ -63,9 +63,13 @@ textarea {
   position: absolute;
 }
 
-input, textarea, .p-heights {
-  padding: 1.5em;
+input, textarea {
+  padding: 1em;
   width: 100% !important
+}
+
+.newLine {
+  padding: 1em;
 }
 
 textarea,
@@ -102,6 +106,5 @@ section h2::after {
   background: var(--bg);
   z-index: -1;
 }
-
 
 
