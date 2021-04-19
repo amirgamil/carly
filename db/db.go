@@ -36,12 +36,11 @@ func AddNew(title string, content string, person string, image string, expiry st
 	}
 
 	urlHash := security.GenerateUniqueHash(string(titleArr[:20]))
-	fmt.Println(urlHash)
-	fmt.Println(expiry)
 	expiryDate, err := time.Parse(time.RFC3339, expiry)
 	if err != nil {
 		fmt.Println("Error parsing the date %s", err)
 	}
+
 	new := Letter{
 		Hash:     urlHash,
 		Title:    title,
@@ -51,6 +50,28 @@ func AddNew(title string, content string, person string, image string, expiry st
 		Image:    image,
 		Password: password,
 	}
+
+	if password != "" {
+		keyDer, salt, error := security.DeriveKey(password, Letter.Salt)
+		if err != nil {
+			panic(err)
+		}
+		new.Salt = salt
+
+		encryptedContent, err := security.Encrypt(keyDer, content)
+		if err != nil {
+			fmt.Println("Error encrypting the content ", err)
+		}
+		new.Message = encryptedContent
+
+		hashedPassword, err := security.HashPassword(password)
+		if err != nil {
+			fmt.Println("Error hashing the password ", err)
+		}
+		new.Hash = hashedPassword
+
+	}
+
 	fmt.Printf("%+v\n", new)
 
 	//TODO: bunch of checks for password and stuff

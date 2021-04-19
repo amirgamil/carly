@@ -5,6 +5,8 @@ import (
 	"encoding/hex"
 	"fmt"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 const urlLength = 7
@@ -24,3 +26,7 @@ func hashString(stringToHash string) string {
 }
 
 //TODO: add security via a password
+func HashPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassWord([]byte(password), bcrypt.DefaultCost)
+	return string(hash), err
+}

@@ -15,4 +15,5 @@ type Letter struct {
 	Message  string `json:"message"`
 	Person   string `json:"person"`
 	Image    string `json: "image"`
+	Salt     []byte
 }
