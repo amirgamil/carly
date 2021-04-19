@@ -32,7 +32,9 @@ func initSession(user string, pass string, ip string) {
 
 	//create index with hash ready to put new elements in
 	//establishes connection to letters database only if unique key
+	//creates TTL so that mongodb automatically deletes entries past expiration date
 	_ = Session.DB("main").C("letters").EnsureIndex(uniqueHash)
+	_ = Session.DB("main").C("letters").EnsureIndex(sessionTTL)
 
 	letters = Session.DB("main").C("letters")
 	fmt.Println("Established connection to %s", letters)

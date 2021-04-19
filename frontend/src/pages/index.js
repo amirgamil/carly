@@ -7,6 +7,7 @@ import Content from '../components/Content'
 import Text from '../components/Text'
 import PopUp from '../components/PopUp'
 import { useState } from 'react'
+import createLetter from '../https/createLetter'
 
 const Container = styled.form`
   max-width: 800px;
@@ -34,7 +35,7 @@ export default function Home() {
   function getExpiryDate() {
     var d = new Date();
     if (expiry === "day") {
-      d.setDay(d.getDay() + 1);
+      d.setDate(d.getDate() + 1);
     } else if (expiry === "week") {
       d.setWeek(d.getWeek() + 1);
     } else if (expiry === "month") {
@@ -48,23 +49,17 @@ export default function Home() {
   }
 
   function generateCard() {
-      var myHeaders = new Headers();
-      var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: JSON.stringify({
-              "hash": "",
-              "title": titleLetter,
-              "password": password,
-              "expiry": getExpiryDate(),
-              "message": msg,
-              "image": imgAdd,
-              "person": nameLetter
-          }),
-      };
+      
       //prevent resubmission
       if (!newURL) {
-        fetch("http://127.0.0.1:8998/api", requestOptions)
+        createLetter({
+          title: titleLetter,
+          message: msg, 
+          person: nameLetter,
+          image: imgAdd, 
+          expiry: getExpiryDate(), 
+          password: password,
+        })
         .then(res => res.json())
         .then(data => {
             setNewURL("http://localhost:3000/" + data.hash);
@@ -110,7 +105,7 @@ export default function Home() {
             <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
               <div>
                 <label>password</label>
-                <input type="password" value={password} onChange={setPassword}/>
+                <input type="password" value={password} onChange={(evt) => setPassword(evt.target.value)}/>
               </div>
               <div>
                 <label>expiry</label>  

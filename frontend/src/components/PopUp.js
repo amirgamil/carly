@@ -11,7 +11,7 @@ const PopUp = ({url, toggle}) => {
         <div className={styles.modal}>
             <div className={`block wrapper ${styles.modalContent}`}>
                 <h3 style={{paddingBottom: "10px"}}>card created!</h3>
-                <label class="urlLabel">
+                <label className="urlLabel">
                     <div style={{marginBottom: "10px"}}>
                         <span>url</span>
                     </div>

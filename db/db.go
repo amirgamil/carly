@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/amirgamil/carly/security"
 	"github.com/joho/godotenv"
@@ -26,7 +27,7 @@ func init() {
 	fmt.Println(letters)
 }
 
-func AddNew(title string, content string, person string, image string) string {
+func AddNew(title string, content string, person string, image string, expiry string, password string) string {
 	titleArr := []byte(title)
 	err := checkLengths(title, content)
 	if err != nil {
@@ -36,13 +37,19 @@ func AddNew(title string, content string, person string, image string) string {
 
 	urlHash := security.GenerateUniqueHash(string(titleArr[:20]))
 	fmt.Println(urlHash)
-
+	fmt.Println(expiry)
+	expiryDate, err := time.Parse(time.RFC3339, expiry)
+	if err != nil {
+		fmt.Println("Error parsing the date %s", err)
+	}
 	new := Letter{
-		Hash:    urlHash,
-		Title:   title,
-		Message: content,
-		Person:  person,
-		Image:   image,
+		Hash:     urlHash,
+		Title:    title,
+		Message:  content,
+		Expiry:   expiryDate,
+		Person:   person,
+		Image:    image,
+		Password: password,
 	}
 	fmt.Printf("%+v\n", new)
 

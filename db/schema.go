@@ -1,13 +1,18 @@
 package db
 
-import "time"
+import (
+	"time"
+
+	"github.com/globalsign/mgo/bson"
+)
 
 type Letter struct {
-	Hash     string    `json: "hash"`
-	Expiry   time.Time `json: "expiry"`
-	Password string    `json: "password"`
-	Title    string    `json: "title"`
-	Message  string    `json: "message"`
-	Person   string    `json: "person"`
-	Image    string    `json: "image"`
+	ID       bson.ObjectId `bson:"_id,omitempty"`
+	Hash     string
+	Expiry   time.Time `bson:"expiry" json:"expiry,string"`
+	Password string
+	Title    string `json:"title"`
+	Message  string `json:"message"`
+	Person   string `json:"person"`
+	Image    string `json: "image"`
 }

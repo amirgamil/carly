@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/amirgamil/carly/db"
@@ -14,13 +13,15 @@ func WriteDB(w http.ResponseWriter, r *http.Request) {
 	// Allow CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	var letterToWrite db.Letter
-	err := json.NewDecoder(r.Body).Decode(&letterToWrite)
-	if err != nil {
-		log.Fatal("Error parsing the JSON to create a new letter %s", err)
-	}
+	_ = r.ParseMultipartForm(0)
+	title := r.FormValue("title")
+	message := r.FormValue("message")
+	person := r.FormValue("person")
+	image := r.FormValue("image")
+	expiry := r.FormValue("expiry")
+	password := r.FormValue("password")
 	//make a call to db with letter to write
-	urlHash := db.AddNew(letterToWrite.Title, letterToWrite.Message, letterToWrite.Person, letterToWrite.Image)
+	urlHash := db.AddNew(title, message, person, image, expiry, password)
 	toReturn := map[string]string{
 		"hash": urlHash,
 	}
