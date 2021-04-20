@@ -30,15 +30,33 @@ func WriteDB(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func ReadDB(w http.ResponseWriter, r *http.Request) {
+func HandleLetter(w http.ResponseWriter, r *http.Request) {
+	getLetterWithPassword(w, r, "")
+}
+
+func HandleLetterWithPassword(w http.ResponseWriter, r *http.Request) {
+	_ = r.ParseMultipartForm(0)
+	password := r.FormValue("password")
+	fmt.Println("Attempted password ", password)
+	getLetterWithPassword(w, r, password)
+}
+
+func getLetterWithPassword(w http.ResponseWriter, r *http.Request, password string) {
 	// Allow CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	vars := mux.Vars(r)
 	fmt.Println(vars["hash"])
-	res, err := db.LookUp(vars["hash"])
+	res, err := db.LookUp(vars["hash"], password)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Println("Couldn't find the letter for %s", vars["hash"])
+		switch err {
+		case db.UnauthorizedUser:
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Println("User is not authorized my dude ", err)
+		default:
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Println("Couldn't find the letter for %s", vars["hash"])
+		}
+
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")

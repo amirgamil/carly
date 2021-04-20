@@ -52,7 +52,7 @@ func AddNew(title string, content string, person string, image string, expiry st
 	}
 
 	if password != "" {
-		keyDer, salt, error := security.DeriveKey(password, Letter.Salt)
+		keyDer, salt, err := security.DeriveKey(password, nil)
 		if err != nil {
 			panic(err)
 		}
@@ -68,7 +68,7 @@ func AddNew(title string, content string, person string, image string, expiry st
 		if err != nil {
 			fmt.Println("Error hashing the password ", err)
 		}
-		new.Hash = hashedPassword
+		new.Password = hashedPassword
 
 	}
 
@@ -94,6 +94,6 @@ func checkLengths(title string, content string) error {
 	return nil
 }
 
-func LookUp(hash string) (Letter, error) {
-	return fetch(hash)
+func LookUp(hash string, password string) (Letter, error) {
+	return fetch(hash, password)
 }

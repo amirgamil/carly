@@ -27,6 +27,18 @@ func hashString(stringToHash string) string {
 
 //TODO: add security via a password
 func HashPassword(password string) (string, error) {
-	hash, err := bcrypt.GenerateFromPassWord([]byte(password), bcrypt.DefaultCost)
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(hash), err
+}
+
+func VerifyPassword(hashedPassword string, userPassword string) bool {
+	byteHashedPassword := []byte(hashedPassword)
+	byteUserPassword := []byte(userPassword)
+
+	err := bcrypt.CompareHashAndPassword(byteHashedPassword, byteUserPassword)
+	if err != nil {
+		fmt.Println("Error verifying password, ", err)
+		return false
+	}
+	return true
 }

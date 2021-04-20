@@ -4,8 +4,9 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"crypto/scrypt"
 	"fmt"
+
+	"golang.org/x/crypto/scrypt"
 )
 
 func Encrypt(key string, data string) (string, error) {
@@ -72,7 +73,7 @@ const relativeMemoryCost = 8
 const relativeCPUCost = 1
 
 //Securely get key from password (Percival et al. https://www.tarsnap.com/scrypt/scrypt.pdf)
-func DeriveKey(string password, salt []byte) (string, []byte, err) {
+func DeriveKey(password string, salt []byte) (string, []byte, error) {
 	if salt == nil {
 		//reads and copies keyBytes into a new byte array
 		salt = make([]byte, keyBytes)
@@ -81,7 +82,7 @@ func DeriveKey(string password, salt []byte) (string, []byte, err) {
 		}
 	}
 
-	derivedKey, err := scrypt.Key(password, salt, cpuLimit, relativeMemoryCost, relativeCPUCost, keyBytes)
+	derivedKey, err := scrypt.Key([]byte(password), salt, cpuLimit, relativeMemoryCost, relativeCPUCost, keyBytes)
 	if err != nil {
 		fmt.Println("Error getting a derived key ", err)
 		return "", nil, err

@@ -1,8 +1,10 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 
+	"github.com/amirgamil/carly/security"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 )
@@ -44,12 +46,42 @@ func insert(new Letter) error {
 	return letters.Insert(new)
 }
 
+var UnauthorizedUser = errors.New("password is wrong or not provided")
+
 //look up hash string in the database
-func fetch(hash string) (Letter, error) {
+//returns a letter if found, if it's password protected (so will need to handle), and an error
+func fetch(hash string, password string) (Letter, error) {
 	//create BSON object of hash string to look for in the database
 	lookFor := bson.M{"hash": hash}
 
 	var result Letter
 	err := letters.Find(lookFor).One(&result)
+	if result.Password != "" {
+		isValid := security.VerifyPassword(result.Password, password)
+		if !isValid {
+			return Letter{}, UnauthorizedUser
+		}
+		//get the key from the Salt in order to decrpt the message
+		key, _, err := security.DeriveKey(password, result.Salt)
+		if err != nil {
+			fmt.Println("Error calculating key to decrypt the message ", err)
+			panic(err)
+		}
+
+		//decrypt the message and only return what is necessary (if no password, dont' care about Salt)
+		decryptedMessage, err := security.Decrypt(string(key), result.Message)
+		if err != nil {
+			fmt.Println("Error decrypting the message, ", err)
+			panic(err)
+		}
+		result = Letter{
+			Hash:    result.Hash,
+			Title:   result.Title,
+			Message: decryptedMessage,
+			Person:  result.Person,
+			Image:   result.Image,
+			Expiry:  result.Expiry,
+		}
+	}
 	return result, err
 }

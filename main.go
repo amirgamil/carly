@@ -29,7 +29,8 @@ func main() {
 	}
 
 	r.Methods("POST").Path("/api").HandlerFunc(api.WriteDB)
-	r.Methods("GET").Path("/api/{hash}").HandlerFunc(api.ReadDB)
+	r.Methods("GET").Path("/api/{hash}").HandlerFunc(api.HandleLetter)
+	r.Methods("POST").Path("/api/{hash}").HandlerFunc(api.HandleLetterWithPassword)
 	http.Handle("/", r)
 
 	log.Printf("Server listening on %s\n", srv.Addr)
