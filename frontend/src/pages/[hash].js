@@ -2,6 +2,8 @@ import getLetter from '../https/getLetter'
 import styled from 'styled-components'
 import Letter from '../components/Letter'
 import Footer from '../components/Footer'
+import { useState } from 'react';
+import { useRouter } from 'next/router'
 
 //Generate card URLs by making a request to the server, pre-render page from props returned
 export async function getServerSideProps(ctx) {
@@ -11,19 +13,19 @@ export async function getServerSideProps(ctx) {
         return {
             notFound: true,
         }
-        //eventually add this to take you to a page
-        // return {
-        //     redirect: {
-        //       destination: '/',
-        //       permanent: false,
-        //     },
-        // }
+    } else if (data.status === 401) {
+        //Means the letter requires a password, so we need to render it as such
+        return {
+            props: {
+                authenticated: false,
+            }
+        }
     }
     console.log({
         props: { data }, //will be passed into page component as props
     });
     return {
-        props: { template: false, data }, //will be passed into page component as props
+        props: { data, authenticated: true }, //will be passed into page component as props
     }
 }
 
@@ -36,13 +38,43 @@ const Main = styled.div`
     width: 100%;
 `;
 
-const ViewLetter = ({ data }) => {
-    return (
-        <Main>
-            <Letter template = {false} data={data}/>
-            <Footer />
-        </Main>
-    )
+const ViewLetter = ({ data, authenticated }) => {
+    const [isAuthenticated, setAuthenticated] = useState(authenticated);
+    const [password, setPassword] = useState('');
+    const [clientData, setClientData] = useState(data)
+    const router = useRouter();
+    const hash = router.query;
+
+    const tryAuthenticating = () => {
+        getLetter(hash.hash, password)
+               .then(data => {
+                   if (data.success) {
+                       setAuthenticated(true);
+                       setClientData( { data } );
+                       console.log(clientData);
+                   }
+               }).catch(exception => {
+                    console.log("error authenticating with a password " + exception);
+               });
+    }
+
+    if (isAuthenticated) {
+        return (
+            <Main>
+                <Letter template = {false} data={clientData}/>
+                <Footer />
+            </Main>
+        )
+    } else {
+        return (
+            <div>
+                <input type="text" value={password} onChange={(evt) => setPassword(evt.target.value)}/>
+                <button onClick={(evt) => tryAuthenticating()}>
+                    submit
+                </button>
+            </div>
+        )
+    }
 }
 
 export default ViewLetter
