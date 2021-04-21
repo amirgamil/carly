@@ -48,10 +48,15 @@ const ViewLetter = ({ data, authenticated }) => {
     const tryAuthenticating = () => {
         getLetter(hash.hash, password)
                .then(data => {
-                   if (data.success) {
-                       setAuthenticated(true);
-                       setClientData( { data } );
-                       console.log(clientData);
+                   console.log(data);
+                   if (data.success === true) {
+                       //need to set client data before we set authenticated which upon the rerender would still have 
+                       //undefined data
+                        setClientData(data);
+                        setAuthenticated(true);
+                        console.log(clientData);
+                    } else {
+                        alert("wrong password");
                    }
                }).catch(exception => {
                     console.log("error authenticating with a password " + exception);
@@ -59,6 +64,7 @@ const ViewLetter = ({ data, authenticated }) => {
     }
 
     if (isAuthenticated) {
+        console.log(clientData);
         return (
             <Main>
                 <Letter template = {false} data={clientData}/>
