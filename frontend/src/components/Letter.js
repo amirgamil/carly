@@ -9,7 +9,7 @@ const Letter = (props) => {
                 <div className={`wrapper block ${styles.image}`}>
                     <img className = {`${styles.img}`}src={props.data.image} />
                 </div> 
-                <p style= {{ whiteSpace: "pre-line", marginTop: "15px"}}>
+                <p style= {{ fontSize: "1.5em", whiteSpace: "pre-line", marginTop: "15px"}}>
                   {props.data.message}
                 </p>
             </div>

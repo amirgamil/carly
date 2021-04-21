@@ -3,12 +3,12 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import styled from 'styled-components';
 import Intro from '../components/Intro.js'
-import Content from '../components/Content'
 import Text from '../components/Text'
 import PopUp from '../components/PopUp'
 import { useState } from 'react'
 import createLetter from '../https/createLetter'
-
+import Info from '../components/Info'
+import Entry from '../components/Entry';
 const Container = styled.form`
   max-width: 800px;
   width: calc(100% - 2em);
@@ -20,7 +20,6 @@ const OptionContainer = styled.div`
     margin: 0 auto;
 `;
 
-
 export default function Home() {
   const [titleLetter, setTitleLetter] = useState('');
   const [nameLetter, setNameLetter] = useState('');
@@ -30,6 +29,7 @@ export default function Home() {
   const [popUp, togglePopUp] = useState(false);
   const [password, setPassword] = useState('');
   const [expiry, setExpiry] = useState('day');
+  const [numPeople, setNumPeople] = useState(1);
 
 
   function getExpiryDate() {
@@ -38,7 +38,7 @@ export default function Home() {
       d.setDate(d.getDate() + 1);
     } else if (expiry === "week") {
       d.setWeek(d.getWeek() + 1);
-    } else if (expiry === "month") {
+    } else if (expiry === "mofnth") {
       d.setMonth(d.getMonth() + 1);
     } else if (expiry === "year") {
       d.setFullYear(d.getFullYear() + 1);
@@ -78,37 +78,32 @@ export default function Home() {
       <Intro />
       {popUp ? <PopUp url = {newURL} toggle = {togglePopUp}/> : null}
       <Container>
-          <div className="block wrapper" style={{marginTop: "3em", display: "flex", 
-        flexDirection: "column", alignItems: "center", justifyContent: "space-between", 
-        padding: "1em", backgroundColor: "red"}}>
-            <h1 className="block">Make a card!</h1>
+        <Info />
+          <div className="" style={{marginTop: "3em", display: "flex", 
+        flexDirection: "column", justifyContent: "space-between", 
+        padding: "1em"}}>
+            <h1 className="cp">Let's make a card!</h1>
             <OptionContainer>
                 <h1 className="option">Pick the title</h1>
                 <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
             </OptionContainer>
-            <OptionContainer>
-                <h1 className="option">Enter your name</h1>
-                <p>Enter your name to display at the top of the letter</p>
-                <Text placeholderTxt="Enter your name" value={nameLetter} onchange = {setNameLetter}/>
-            </OptionContainer>
-            <OptionContainer>
-                <h1 className="option">What's the message?</h1>
-                <p>Enter it exactly as you want it to appear on the website card (including linebreaks and spaces)</p>
-                <Content placeholderTxt="Enter your message" content = {msg} onchange={setMsgLetter}/> 
-            </OptionContainer>
-            <OptionContainer>
-                <h1 className="option">Enter an image address</h1>
-                <p>Unfortunately, we don't support directly uploading images, but any image link (google drive etc.) works!</p>
-                <Text placeholderTxt="Enter an image address" value={imgAdd} onchange = {setImgAdd}/>
-            </OptionContainer>
+            <ul>{[...Array(numPeople)].map((_, i) => {
+              return <Entry key={i} nameLetter={nameLetter} setNameLetter={setNameLetter} msg={msg} 
+              setMsgLetter={setMsgLetter} imgAdd={imgAdd} setImgAdd={setImgAdd}/>
+            })}</ul>
+            <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} onClick={() => setNumPeople(numPeople + 1)}>
+              +
+            </span>
             <br/>
-            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly"}}>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%"}}>
               <div>
                 <label>password</label>
-                <input type="password" value={password} onChange={(evt) => setPassword(evt.target.value)}/>
+                <input placeholder = "Enter a password if you'd like" type="password" 
+                       value={password} onChange={(evt) => setPassword(evt.target.value)}/>
               </div>
               <div>
-                <label>expiry</label>  
+                <label style={{paddingBottom: "10px"}} >expiry</label>
+                <br />  
                 <select name="expiry" id="expiry" onChange={(evt) => setExpiry(evt.target.value)}>
                   <option value="day">1 day</option>
                   <option value="week">1 week</option>
@@ -119,7 +114,7 @@ export default function Home() {
               </div>
                
             </div>
-            <span className="block" style = {{marginTop: "20px", fontSize: "1.3em"}} onClick={generateCard}>
+            <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} onClick={generateCard}>
                 Create
             </span>
         </div>

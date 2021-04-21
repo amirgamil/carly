@@ -4,10 +4,18 @@ body {
   margin: 0 auto;
   --fg: #010100;
   --bg: #f9f2e3;
+  --cp: #78a3ff;
 
+  background-color: #fefcf8;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+/*Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+
+
+
+
 
 header {
   display: flex; 
@@ -47,7 +55,6 @@ a {
   display: flex;
   position: relative;
   width: 100%;
-  background-color: red;
   margin: auto;
 }
 
@@ -92,7 +99,15 @@ section h2 {
   display: inline-block;
 }
 
-section h2::after {
+a {
+  color: var(--cp);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* section h2::after {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -103,8 +118,42 @@ section h2::after {
   display: block;
   height: 30%;
   width: 100%;
-  background: var(--bg);
-  z-index: -1;
+  background: var(--cp);
+  z-index: -1 !important;
+} */
+
+
+.cp {
+  color: var(--cp);
+}
+
+/*Modal content*/
+
+.option {
+  font-size: 1.5em;
+}
+
+
+.modal {
+  position: fixed;
+  z-index: 5;
+  background-color: var(--bg);
+  opacity: 0.95;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.modal-content {
+  width: 300px;
+  padding: 20px !important;
+  margin: 0 auto;
+  border: 1px solid black;
 }
 
 

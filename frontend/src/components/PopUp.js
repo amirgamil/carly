@@ -1,4 +1,4 @@
-import styles from '../styles/PopUp.module.css'
+
 
 const PopUp = ({url, toggle}) => {
 
@@ -8,9 +8,9 @@ const PopUp = ({url, toggle}) => {
     }
 
     return (
-        <div className={styles.modal}>
-            <div className={`block wrapper ${styles.modalContent}`}>
-                <h3 style={{paddingBottom: "10px"}}>card created!</h3>
+        <div className="modal">
+            <div className="block wrapper modal-content">
+                <h3 style={{paddingBottom: "10px"}}>Card created!</h3>
                 <label className="urlLabel">
                     <div style={{marginBottom: "10px"}}>
                         <span>url</span>

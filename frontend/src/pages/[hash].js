@@ -36,6 +36,7 @@ const Main = styled.div`
     color: var(--fg);
     min-height: 100vh;
     width: 100%;
+    font-family: 'Handlee', cursive;
 `;
 
 const ViewLetter = ({ data, authenticated }) => {
@@ -54,7 +55,6 @@ const ViewLetter = ({ data, authenticated }) => {
                        //undefined data
                         setClientData(data);
                         setAuthenticated(true);
-                        console.log(clientData);
                     } else {
                         alert("wrong password");
                    }
@@ -64,7 +64,6 @@ const ViewLetter = ({ data, authenticated }) => {
     }
 
     if (isAuthenticated) {
-        console.log(clientData);
         return (
             <Main>
                 <Letter template = {false} data={clientData}/>
@@ -73,11 +72,15 @@ const ViewLetter = ({ data, authenticated }) => {
         )
     } else {
         return (
-            <div>
-                <input type="text" value={password} onChange={(evt) => setPassword(evt.target.value)}/>
-                <button onClick={(evt) => tryAuthenticating()}>
-                    submit
-                </button>
+            <div className="modal">
+                <div className="block wrapper modal-content">
+                    <h3 style={{marginBottom: "20px"}}>Ooops, there's a gift on the other side!</h3>
+                    <input style={{marginBottom: "20px"}} placeholder="Enter the password" type="password" value={password} 
+                           onChange={(evt) => setPassword(evt.target.value)}/>
+                    <button className="block" onClick={(evt) => tryAuthenticating()}>
+                        Submit
+                    </button>
+                </div>
             </div>
         )
     }
