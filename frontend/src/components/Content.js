@@ -8,10 +8,16 @@ const TextInput = styled.textarea`
 `;
 
 export default function Content({placeholderTxt, content, onchange}) {
+
+    const handleChange = (evt) => {
+        onchange(evt.target.value);
+        evt.preventDefault();
+    }
+
     return (
         <div className = "block-body">
             <TextInput className = "editor" placeholder = {placeholderTxt}
-            onChange={(evt) => onchange(evt.target.value)} value = {content} />
+            onChange={(evt) => handleChange(evt)} value = {content} />
             <div className = {`p-heights ${content.endsWith("\n") ? "newLine" : ""}`}>{content}</div>
         </div>
     )

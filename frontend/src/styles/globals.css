@@ -70,9 +70,14 @@ textarea {
   position: absolute;
 }
 
+input {
+  border: 0.1 black solid;
+}
+
 input, textarea {
   padding: 1em;
-  width: 100% !important
+  width: 100% !important;
+  background-color: var(--bg);
 }
 
 .newLine {

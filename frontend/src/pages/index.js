@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Intro from '../components/Intro.js'
 import Text from '../components/Text'
 import PopUp from '../components/PopUp'
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import createLetter from '../https/createLetter'
 import Info from '../components/Info'
 import Entry from '../components/Entry';
@@ -20,11 +20,35 @@ const OptionContainer = styled.div`
     margin: 0 auto;
 `;
 
+//reducer takes (state, action) but we destructure action into the 4 values we need
+const reducer = (cardStore, {operation, key, value, indexModify}) => {
+  switch (operation) {
+    case "add":
+      return [...cardStore, {name: "", msg: "", imgAdd: ""}];
+    case "remove":
+      return cardStore.filter((_, index) => index !== key);
+    case "update":
+      //need to destructure state to create a new copy so that React picks up the change to rerender!
+      let newCardStore = [...cardStore]
+      newCardStore.forEach((data, index) => {
+        if (index === indexModify) {
+          data[key] = value;
+        } 
+        return data;
+      });
+      return newCardStore;
+    default:
+      return cardStore;
+  }
+};
+
 export default function Home() {
   const [titleLetter, setTitleLetter] = useState('');
-  const [nameLetter, setNameLetter] = useState('');
-  const [msg, setMsgLetter] = useState('');
-  const [imgAdd, setImgAdd] = useState('');
+  //Card store is an array of objects {"name": _, "msg": , "img":}
+  //useReducer takes (reducer, initialState)
+  const [cardStore, dispatch] = useReducer(reducer, [{name: "test", msg: "", imgAdd: ""}] );
+  // const [msg, setMsgLetter] = useState(['']);
+  // const [imgAdd, setImgAdd] = useState(['']);
   const [newURL, setNewURL] = useState('');
   const [popUp, togglePopUp] = useState(false);
   const [password, setPassword] = useState('');
@@ -72,6 +96,20 @@ export default function Home() {
       
   }
 
+  //general handler used to modify the different values in each of the cards
+  //key is the type of variable being changed (name, img, msg), newContent is what to update this with and index is which card
+  //newContent needs to get passed up (to this component the parent) from child
+  function updateField(key, newContent, index) {
+    dispatch({operation: "add", key: key, value: newContent, indexModify: index})
+  }
+
+  function decreaseNumberCards() {
+    const len = cardStore.length;
+    if (len >= 2) {
+      dispatch({operation: "remove", key: cardStore.length - 1})
+    }
+  }
+
   return (
     <>
       <Header />
@@ -82,19 +120,31 @@ export default function Home() {
           <div className="" style={{marginTop: "3em", display: "flex", 
         flexDirection: "column", justifyContent: "space-between", 
         padding: "1em"}}>
-            <h1 className="cp">Let's make a card!</h1>
+            <h1 className="cp">Let's make a letter!</h1>
             <OptionContainer>
                 <h1 className="option">Pick the title</h1>
                 <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
+                {console.log("hi")}
+                {cardStore.map((_, i) => {
+                  return <Entry key={i.toString()} index={i} nameLetter={cardStore[i].name} msg={cardStore[i].msg} 
+                  imgAdd={cardStore[i].imgAdd} dispatch={dispatch} />
+                  })}
             </OptionContainer>
-            <ul>{[...Array(numPeople)].map((_, i) => {
-              return <Entry key={i} nameLetter={nameLetter} setNameLetter={setNameLetter} msg={msg} 
-              setMsgLetter={setMsgLetter} imgAdd={imgAdd} setImgAdd={setImgAdd}/>
-            })}</ul>
-            <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} onClick={() => setNumPeople(numPeople + 1)}>
-              +
-            </span>
-            <br/>
+            <OptionContainer>
+              <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", backgroundColor: "red"}} 
+                      onClick={() => dispatch({operation: "add"})}>
+                  +
+                </span>
+                <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} 
+                      onClick={() => decreaseNumberCards()}>
+                  -
+                </span>
+                
+              </div>
+              
+            </OptionContainer>
+            
             <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%"}}>
               <div>
                 <label>password</label>
@@ -114,9 +164,11 @@ export default function Home() {
               </div>
                
             </div>
-            <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} onClick={generateCard}>
+            <br/>
+            <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", margin: "0 auto"}} onClick={generateCard}>
                 Create
-            </span>
+              </span>
+            
         </div>
         <hr style={{borderBottom: "4px dotted black", border: "0px", padding: "20px", display: "block"}}></hr>
       </Container>

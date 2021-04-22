@@ -8,9 +8,13 @@ const TitleInput = styled.input`
 `;
 
 const Title = ({placeholderTxt, value, onchange}) => {
+    const handleChange = (evt) => {
+        onchange(evt.target.value);
+        evt.preventDefault();
+    }
     return (
         <TitleInput placeholder={placeholderTxt}
-        onChange={evt => onchange(evt.target.value)} value = {value} />
+        onChange={evt => handleChange(evt)} value = {value} />
     )
 }
 
