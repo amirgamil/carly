@@ -4,12 +4,14 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"encoding/json"
 	"fmt"
 
+	"github.com/amirgamil/carly/schema"
 	"golang.org/x/crypto/scrypt"
 )
 
-func Encrypt(key string, data string) (string, error) {
+func Encrypt(key string, data []schema.LetterData) (string, error) {
 	//generate a new aes cipher block with the key we have
 	//aes works by transforming data into blocks or grids of bytes to work with
 	//it does not operate on a long sequence of text
@@ -32,14 +34,18 @@ func Encrypt(key string, data string) (string, error) {
 		return "", err
 	}
 
+	marshalledData, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println("Error marshalling the data for encryption ", err)
+	}
 	//seal nonce with data to use during decryption
-	cipherText := gcm.Seal(nonce, nonce, []byte(data), nil)
+	cipherText := gcm.Seal(nonce, nonce, marshalledData, nil)
 
 	//cipherText is jibber jabber that needs to be decrypted by the key to be understood
 	return string(cipherText), nil
 }
 
-func Decrypt(key string, data string) (string, error) {
+func Decrypt(key string, data string) ([]schema.LetterData, error) {
 	//similar to encrypt
 	cipherBlock, err := aes.NewCipher([]byte(key))
 	if err != nil {
@@ -49,7 +55,7 @@ func Decrypt(key string, data string) (string, error) {
 	// wrap block cipher with Galois Counter Mode and standard nonce length
 	gcm, err := cipher.NewGCM(cipherBlock)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	//TODO: don't understand what this does, need to go over it
@@ -57,12 +63,16 @@ func Decrypt(key string, data string) (string, error) {
 	nonce, cipherText := data[:gcm.NonceSize()], data[gcm.NonceSize():]
 
 	// use nonce to decrypt the data
-	plaintext, err := gcm.Open(nil, []byte(nonce), []byte(cipherText), nil)
+	marshalledData, err := gcm.Open(nil, []byte(nonce), []byte(cipherText), nil)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-
-	return string(plaintext), nil
+	var cardData []schema.LetterData
+	errM := json.Unmarshal(marshalledData, &cardData)
+	if err != nil {
+		fmt.Println("Error unmarshalling encrypted data ", errM)
+	}
+	return cardData, nil
 
 }
 

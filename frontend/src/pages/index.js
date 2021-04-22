@@ -46,7 +46,7 @@ export default function Home() {
   const [titleLetter, setTitleLetter] = useState('');
   //Card store is an array of objects {"name": _, "msg": , "img":}
   //useReducer takes (reducer, initialState)
-  const [cardStore, dispatch] = useReducer(reducer, [{name: "test", msg: "", imgAdd: ""}] );
+  const [cardStore, dispatch] = useReducer(reducer, [{name: "", msg: "", imgAdd: ""}] );
   // const [msg, setMsgLetter] = useState(['']);
   // const [imgAdd, setImgAdd] = useState(['']);
   const [newURL, setNewURL] = useState('');
@@ -76,14 +76,14 @@ export default function Home() {
       
       //prevent resubmission
       if (!newURL) {
-        createLetter({
-          title: titleLetter,
-          message: msg, 
-          person: nameLetter,
-          image: imgAdd, 
-          expiry: getExpiryDate(), 
-          password: password,
-        })
+        //since we have nested array of objects in our json, pass in array of names to indicate which we want to process
+        createLetter(
+          JSON.stringify({
+            title: titleLetter,
+            expiry: getExpiryDate(), 
+            password: password,
+            content: cardStore
+          }, ['title', 'expiry', 'password', 'content', 'name', 'msg', 'imgAdd']))
         .then(res => res.json())
         .then(data => {
             setNewURL("http://localhost:3000/" + data.hash);
@@ -94,13 +94,6 @@ export default function Home() {
       }
       
       
-  }
-
-  //general handler used to modify the different values in each of the cards
-  //key is the type of variable being changed (name, img, msg), newContent is what to update this with and index is which card
-  //newContent needs to get passed up (to this component the parent) from child
-  function updateField(key, newContent, index) {
-    dispatch({operation: "add", key: key, value: newContent, indexModify: index})
   }
 
   function decreaseNumberCards() {
@@ -124,7 +117,6 @@ export default function Home() {
             <OptionContainer>
                 <h1 className="option">Pick the title</h1>
                 <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
-                {console.log("hi")}
                 {cardStore.map((_, i) => {
                   return <Entry key={i.toString()} index={i} nameLetter={cardStore[i].name} msg={cardStore[i].msg} 
                   imgAdd={cardStore[i].imgAdd} dispatch={dispatch} />

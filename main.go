@@ -28,7 +28,7 @@ func main() {
 		ReadTimeout:  60 * time.Second,
 	}
 
-	r.Methods("POST").Path("/api").HandlerFunc(api.WriteDB)
+	r.Methods("POST", "OPTIONS").Path("/api").HandlerFunc(api.WriteDB)
 	r.Methods("GET").Path("/api/{hash}").HandlerFunc(api.HandleLetter)
 	r.Methods("POST").Path("/api/{hash}").HandlerFunc(api.HandleLetterWithPassword)
 	http.Handle("/", r)

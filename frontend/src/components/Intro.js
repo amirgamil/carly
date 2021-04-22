@@ -2,9 +2,9 @@ import ViewLetter from '../pages/[hash].js'
 import Letter from '../components/Letter'
 
 export default function Intro() {
-    const tempData = {
+    const tempData = [{
         person: "Riley",
-        message: `Dear Molly, 
+        msg: `Dear Molly, 
         
                   Thanks for being the best friend I could ask for. 
                   
@@ -15,8 +15,8 @@ export default function Intro() {
                   Best,
 
                   Riley`,
-        image: "https://www.ctvsh.com/sites/default/files/styles/large/public/golden-retriever-dog-breed-info.jpg?itok=KV7Ojj-C",
-    }
+        imgAdd: "https://www.ctvsh.com/sites/default/files/styles/large/public/golden-retriever-dog-breed-info.jpg?itok=KV7Ojj-C",
+    }]
     return (
         <>
             <section style={{margin: "0 auto", width: "100%", textAlign: "center", padding: "1em"}}>
@@ -36,7 +36,7 @@ export default function Intro() {
                     </a>
                 </div>
             </section>   
-            <Letter style={{padding: "1em"}} template = {true} data = {tempData}/>
+            <Letter style={{padding: "1em"}} template = {true} title={""} content = {tempData}/>
         </>
     )
 }

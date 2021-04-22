@@ -1,15 +1,18 @@
 package db
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"time"
 
+	"github.com/amirgamil/carly/schema"
 	"github.com/amirgamil/carly/security"
 	"github.com/joho/godotenv"
 )
 
 const TitleLimit = 100
+const CardLimit = 25
 const ContentLimit = 100000
 
 func init() {
@@ -27,7 +30,7 @@ func init() {
 	fmt.Println(letters)
 }
 
-func AddNew(title string, content string, person string, image string, expiry string, password string) string {
+func AddNew(title string, content []schema.LetterData, expiry string, password string) string {
 	titleArr := []byte(title)
 	err := checkLengths(title, content)
 	if err != nil {
@@ -40,14 +43,15 @@ func AddNew(title string, content string, person string, image string, expiry st
 	if err != nil {
 		fmt.Println("Error parsing the date %s", err)
 	}
-
-	new := Letter{
+	marshalledContent, err := json.Marshal(content)
+	if err != nil {
+		fmt.Println("Error marshalling content")
+	}
+	new := schema.Letter{
 		Hash:     urlHash,
 		Title:    title,
-		Message:  content,
+		Data:     string(marshalledContent),
 		Expiry:   expiryDate,
-		Person:   person,
-		Image:    image,
 		Password: password,
 	}
 
@@ -62,7 +66,7 @@ func AddNew(title string, content string, person string, image string, expiry st
 		if err != nil {
 			fmt.Println("Error encrypting the content ", err)
 		}
-		new.Message = encryptedContent
+		new.Data = encryptedContent
 
 		hashedPassword, err := security.HashPassword(password)
 		if err != nil {
@@ -83,17 +87,22 @@ func AddNew(title string, content string, person string, image string, expiry st
 
 }
 
-func checkLengths(title string, content string) error {
+func checkLengths(title string, content []schema.LetterData) error {
 	if len(title) > TitleLimit {
 		return fmt.Errorf("title is longer than character limit of %d\n", TitleLimit)
 	}
-	if len(content) > ContentLimit {
-		return fmt.Errorf("content is longer than character limit of %d\n", ContentLimit)
+	if len(content) > CardLimit {
+		return fmt.Errorf("# of cards is longer than limit of %d\n", CardLimit)
+	}
+	for _, s := range content {
+		if len(s.Message) > ContentLimit {
+			return fmt.Errorf("content within a card is longer than character limit of %d\n", ContentLimit)
+		}
 	}
 
 	return nil
 }
 
-func LookUp(hash string, password string) (Letter, error) {
+func LookUp(hash string, password string) (schema.JSONLetter, error) {
 	return fetch(hash, password)
 }

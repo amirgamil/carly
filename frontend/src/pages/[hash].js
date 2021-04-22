@@ -64,9 +64,10 @@ const ViewLetter = ({ data, authenticated }) => {
     }
 
     if (isAuthenticated) {
+        console.log(clientData.content);
         return (
             <Main>
-                <Letter template = {false} data={clientData}/>
+                <Letter template = {false} title={clientData.title} content={clientData.content}/>
                 <Footer />
             </Main>
         )

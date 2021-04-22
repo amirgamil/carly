@@ -1,18 +1,15 @@
 
 
 
-const createLetter = ({title, message, person, image, expiry, password}) => {
-    var bodyFormData = new FormData();
-    bodyFormData.append('title', title);
-    bodyFormData.append('message', message);
-    bodyFormData.append('person', person);
-    bodyFormData.append('image', image);
-    bodyFormData.append('expiry', expiry);
-    bodyFormData.append('password', password);
+const createLetter = (data) => {
     const requestOptions = {
         method: 'POST',
-        body: bodyFormData
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: data
     };
+    console.log(data);
     return fetch("http://127.0.0.1:8998/api", requestOptions);
 }
 

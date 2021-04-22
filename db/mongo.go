@@ -1,9 +1,11 @@
 package db
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
+	"github.com/amirgamil/carly/schema"
 	"github.com/amirgamil/carly/security"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
@@ -42,7 +44,7 @@ func initSession(user string, pass string, ip string) {
 	fmt.Println("Established connection to %s", letters)
 }
 
-func insert(new Letter) error {
+func insert(new schema.Letter) error {
 	return letters.Insert(new)
 }
 
@@ -50,16 +52,21 @@ var UnauthorizedUser = errors.New("password is wrong or not provided")
 
 //look up hash string in the database
 //returns a letter if found, if it's password protected (so will need to handle), and an error
-func fetch(hash string, password string) (Letter, error) {
+func fetch(hash string, password string) (schema.JSONLetter, error) {
 	//create BSON object of hash string to look for in the database
 	lookFor := bson.M{"hash": hash}
 
-	var result Letter
+	var result schema.Letter
 	err := letters.Find(lookFor).One(&result)
+	jsonResult := schema.JSONLetter{
+		Hash:   result.Hash,
+		Title:  result.Title,
+		Expiry: result.Expiry.String(),
+	}
 	if result.Password != "" {
 		isValid := security.VerifyPassword(result.Password, password)
 		if !isValid {
-			return Letter{}, UnauthorizedUser
+			return schema.JSONLetter{}, UnauthorizedUser
 		}
 		//get the key from the Salt in order to decrpt the message
 		key, _, err := security.DeriveKey(password, result.Salt)
@@ -69,19 +76,19 @@ func fetch(hash string, password string) (Letter, error) {
 		}
 
 		//decrypt the message and only return what is necessary (if no password, dont' care about Salt)
-		decryptedMessage, err := security.Decrypt(string(key), result.Message)
+		decryptedMessage, err := security.Decrypt(string(key), result.Data)
 		if err != nil {
 			fmt.Println("Error decrypting the message, ", err)
 			panic(err)
 		}
-		result = Letter{
-			Hash:    result.Hash,
-			Title:   result.Title,
-			Message: decryptedMessage,
-			Person:  result.Person,
-			Image:   result.Image,
-			Expiry:  result.Expiry,
+		jsonResult.Data = decryptedMessage
+	} else {
+		var actualData []schema.LetterData
+		errD := json.Unmarshal([]byte(result.Data), &actualData)
+		if errD != nil {
+			fmt.Println("Error converting decrypted data back to readable format ", errD)
 		}
+		jsonResult.Data = actualData
 	}
-	return result, err
+	return jsonResult, err
 }
