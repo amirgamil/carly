@@ -76,9 +76,7 @@ func AddNew(title string, content []schema.LetterData, expiry string, password s
 
 	}
 
-	fmt.Printf("%+v\n", new)
-
-	//TODO: bunch of checks for password and stuff
+	// fmt.Printf("%+v\n", new)
 	insertErr := insert(new)
 	if insertErr != nil {
 		fmt.Println("Error inserting a new letter in the db: ", insertErr)

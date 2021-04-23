@@ -12,7 +12,7 @@ const Entry = ({index, nameLetter, msg, imgAdd, dispatch}) => {
     //no way to break this code up since we need to get data from child component and can't pass in
     //callback with methods already set
     const updateNameData = (value) => {
-        dispatch({operation: "update", key: "name", value: value, indexModify: index})
+        dispatch({operation: "update", key: "person", value: value, indexModify: index})
     } 
 
     const updateMsgData = (value) => {

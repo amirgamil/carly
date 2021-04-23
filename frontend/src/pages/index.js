@@ -24,7 +24,7 @@ const OptionContainer = styled.div`
 const reducer = (cardStore, {operation, key, value, indexModify}) => {
   switch (operation) {
     case "add":
-      return [...cardStore, {name: "", msg: "", imgAdd: ""}];
+      return [...cardStore, {person: "", msg: "", imgAdd: ""}];
     case "remove":
       return cardStore.filter((_, index) => index !== key);
     case "update":
@@ -44,9 +44,9 @@ const reducer = (cardStore, {operation, key, value, indexModify}) => {
 
 export default function Home() {
   const [titleLetter, setTitleLetter] = useState('');
-  //Card store is an array of objects {"name": _, "msg": , "img":}
+  //Card store is an array of objects {"person": _, "msg": , "img":}
   //useReducer takes (reducer, initialState)
-  const [cardStore, dispatch] = useReducer(reducer, [{name: "", msg: "", imgAdd: ""}] );
+  const [cardStore, dispatch] = useReducer(reducer, [{person: "", msg: "", imgAdd: ""}] );
   // const [msg, setMsgLetter] = useState(['']);
   // const [imgAdd, setImgAdd] = useState(['']);
   const [newURL, setNewURL] = useState('');
@@ -77,13 +77,14 @@ export default function Home() {
       //prevent resubmission
       if (!newURL) {
         //since we have nested array of objects in our json, pass in array of names to indicate which we want to process
+        console.log(cardStore);
         createLetter(
           JSON.stringify({
             title: titleLetter,
             expiry: getExpiryDate(), 
             password: password,
             content: cardStore
-          }, ['title', 'expiry', 'password', 'content', 'name', 'msg', 'imgAdd']))
+          }, ['title', 'expiry', 'password', 'content', 'person', 'msg', 'imgAdd']))
         .then(res => res.json())
         .then(data => {
             setNewURL("http://localhost:3000/" + data.hash);
@@ -118,7 +119,7 @@ export default function Home() {
                 <h1 className="option">Pick the title</h1>
                 <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
                 {cardStore.map((_, i) => {
-                  return <Entry key={i.toString()} index={i} nameLetter={cardStore[i].name} msg={cardStore[i].msg} 
+                  return <Entry key={i.toString()} index={i} nameLetter={cardStore[i].person} msg={cardStore[i].msg} 
                   imgAdd={cardStore[i].imgAdd} dispatch={dispatch} />
                   })}
             </OptionContainer>
