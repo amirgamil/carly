@@ -19,7 +19,13 @@ const Entry = ({index, nameLetter, msg, imgAdd, dispatch}) => {
         dispatch({operation: "update", key: "msg", value: value, indexModify: index})
     } 
     const updateImgAdd = (value) => {
-        dispatch({operation: "update", key: "imgAdd", value: value, indexModify: index})
+        var result = value;
+        if (value.split(".")[0] === "https://drive") {
+            const arr = value.split("/");
+            result = "http://drive.google.com/uc?export=view&id=" + arr[arr.length - 2];
+            
+        }
+        dispatch({operation: "update", key: "imgAdd", value: result, indexModify: index})
     } 
 
     return (

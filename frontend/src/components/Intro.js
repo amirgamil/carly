@@ -21,7 +21,7 @@ export default function Intro() {
         <>
             <section style={{margin: "0 auto", width: "100%", textAlign: "center", padding: "1em"}}>
                 <h1 style = {{fontSize: "3em", padding: "0 20px 0 20px"}}>
-                    Generate a <span className="cp">beautiful digital card</span> for any occasion that can be
+                    Generate a <span className="cp">beautiful digital letter</span> for any occasion that can be
                     <span className="cp"> shared in seconds</span></h1>
                 <h2 style={{fontSize: "2em", marginTop: "-2em", position: "relative" }}>
                     Open it in your <span className="cp">browser!</span>

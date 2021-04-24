@@ -25,9 +25,9 @@ const Info = () => {
             <ul style={{fontSize: "1.5em"}}>
                 <li>Create a birthday letter for a family or friend</li>
                 <li>Creating a thank you wall for a teacher, family or friend</li>
-                <li>Putting togther pieces of text</li>
+                <li>Collecting some different short stories or pieces of writing</li>
             </ul>
-            <p style={{fontSize: "1.5em"}}>... many more</p>
+            <p style={{fontSize: "1.5em"}}>... many more, get creative!</p>
         </section>
     )
 };

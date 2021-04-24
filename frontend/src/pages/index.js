@@ -77,7 +77,6 @@ export default function Home() {
       //prevent resubmission
       if (!newURL) {
         //since we have nested array of objects in our json, pass in array of names to indicate which we want to process
-        console.log(cardStore);
         createLetter(
           JSON.stringify({
             title: titleLetter,
@@ -114,7 +113,7 @@ export default function Home() {
           <div className="" style={{marginTop: "3em", display: "flex", 
         flexDirection: "column", justifyContent: "space-between", 
         padding: "1em"}}>
-            <h1 className="cp">Let's make a letter!</h1>
+            <h1 className="cp">Let's make a digital letter!</h1>
             <OptionContainer>
                 <h1 className="option">Pick the title</h1>
                 <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
@@ -138,15 +137,14 @@ export default function Home() {
               
             </OptionContainer>
             
-            <div style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%"}}>
-              <div>
-                <label>password</label>
+            <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center", textAlign: "center"}}>
+              <div style={{width: "50%"}}>
+                <p>Password</p>
                 <input placeholder = "Enter a password if you'd like" type="password" 
                        value={password} onChange={(evt) => setPassword(evt.target.value)}/>
               </div>
               <div>
-                <label style={{paddingBottom: "10px"}} >expiry</label>
-                <br />  
+                <p>Expiry</p>
                 <select name="expiry" id="expiry" onChange={(evt) => setExpiry(evt.target.value)}>
                   <option value="day">1 day</option>
                   <option value="week">1 week</option>
@@ -160,10 +158,10 @@ export default function Home() {
             <br/>
             <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", margin: "0 auto"}} onClick={generateCard}>
                 Create
-              </span>
+            </span>
             
         </div>
-        <hr style={{borderBottom: "4px dotted black", border: "0px", padding: "20px", display: "block"}}></hr>
+        <hr style={{borderBottom: "4px dotted black", border: "0px", padding: "20px", display: "block" }}></hr>
       </Container>
       <Footer />
     </>

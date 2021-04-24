@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const TextInput = styled.textarea`
     width: calc(100% - 2em);
-    padding: 1em;
 `;
 
 export default function Content({placeholderTxt, content, onchange}) {
@@ -18,7 +17,7 @@ export default function Content({placeholderTxt, content, onchange}) {
         <div className = "block-body">
             <TextInput className = "editor" placeholder = {placeholderTxt}
             onChange={(evt) => handleChange(evt)} value = {content} />
-            <div className = {`p-heights ${content.endsWith("\n") ? "newLine" : ""}`}>{content}</div>
+            <p className = {`p-heights ${content.endsWith("\n") ? "newLine" : ""}`}>{content}</p>
         </div>
     )
 }

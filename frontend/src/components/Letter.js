@@ -5,7 +5,6 @@ const Letter = ({template, title, content}) => {
         <div className={`${styles.letterCard} ${template ? styles.template : ""}`}>
             <h1>{title}</h1>
             {content.map((data, index) => {
-                console.log(data.person);
                 return (
                     <>
                         <h2 className={styles.person}>{data.person}</h2> 
