@@ -1,6 +1,6 @@
 
-
-
+import img from '../../public/image.gif'
+import drive from '../../public/drive.gif'
 
 const Info = () => {
     return (
@@ -16,8 +16,6 @@ const Info = () => {
                 like <a href="">this</a>, click on the add another person in the make card section. These can be addressed
                 to the same person, or just a collection of different cards.
                 <br/><br/>
-                As of right now, we don't directly support uploading images from your device but any image addess 
-                (including a link to an uploaded photo) will work! We also offer some defualts for ideas :)
 
 
             </p>
@@ -28,6 +26,19 @@ const Info = () => {
                 <li>Collecting some different short stories or pieces of writing</li>
             </ul>
             <p style={{fontSize: "1.5em"}}>... many more, get creative!</p>
+
+            <h1 className="cp"style={{fontSize: "2em"}}>Adding images</h1>
+            <p style={{fontSize: "1.5em"}}>To add images, there are two options. One, you can find any image online and copy its image address
+            like this</p>
+            <img src = {img}/>
+            <p style={{fontSize: "1.5em"}}>Or, you can upload custom photos to google drive and get the image address from there like this
+            (make sure to open the image in a new window!)</p>
+            <img src = {drive}/>
+
+            <h1 className="cp"style={{fontSize: "2em"}}>Support the project</h1>
+            <p style={{fontSize: "1.5em"}}>If you found this project useful, consider supporting it <a 
+            href="https://www.buymeacoffee.com/amirbolous">here</a> to keep it free, forever, for everyone :)</p>
+
         </section>
     )
 };

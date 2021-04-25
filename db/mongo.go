@@ -1,51 +1,79 @@
 package db
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
+	"time"
 
 	"github.com/amirgamil/carly/schema"
 	"github.com/amirgamil/carly/security"
-	"github.com/globalsign/mgo"
-	"github.com/globalsign/mgo/bson"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var Session *mgo.Session
-var letters *mgo.Collection
+var Session *mongo.Client
+var letters *mongo.Collection
+var ctx context.Context
 
 func initSession(user string, pass string, ip string) {
 	// load .env file
-	URIfmt := "mongodb://127.0.0.1:27017" //eventually add user and password
-
-	//potentially update with DialInfo if needed
-	Session, err := mgo.Dial(URIfmt)
+	//"mongodb://%s:%s@%s:27017"
+	URIfmt := "mongodb://%s:%s@%s" //"mongodb://127.0.0.1:27017" eventually add user and password
+	fmt.Println(ip)
+	mongoURI := fmt.Sprintf(URIfmt, user, pass, ip)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	Client, err := mongo.Connect(ctx, options.Client().ApplyURI(
+		mongoURI,
+	))
 	if err != nil {
-		fmt.Println("Error starting Mongo session")
+		fmt.Println("Error starting Mongo session, ", err)
 	}
 
-	uniqueHash := mgo.Index{
-		Key:    []string{"hash"},
-		Unique: true,
-	}
+	// uniqueHash := mgo.Index{
+	// 	Key:    []string{"hash"},
+	// 	Unique: true,
+	// }
 
-	sessionTTL := mgo.Index{
-		Key:         []string{"expiry"},
-		ExpireAfter: 0,
-	}
+	// sessionTTL := mgo.Index{
+	// 	Key:         []string{"expiry"},
+	// 	ExpireAfter: 0,
+	// }
 
-	//create index with hash ready to put new elements in
+	models := []mongo.IndexModel{
+		{
+			Keys:    bson.D{{"hash", 1}},
+			Options: options.Index().SetUnique(true),
+		},
+		{
+			Keys:    bson.D{{"expiry", 1}},
+			Options: options.Index().SetExpireAfterSeconds(0),
+		},
+	}
+	fmt.Println("success")
+	//create index with hash ready to put new elements in (idempotent operations, creates if doesn't exist, otherwise won't run)
 	//establishes connection to letters database only if unique key
 	//creates TTL so that mongodb automatically deletes entries past expiration date
-	_ = Session.DB("main").C("letters").EnsureIndex(uniqueHash)
-	_ = Session.DB("main").C("letters").EnsureIndex(sessionTTL)
-
-	letters = Session.DB("main").C("letters")
+	// _ = Session.Database("main").Collection("letters").CreateIndex(uniqueHash)
+	// _ = Session.Database("main").Collection("letters").CreateIndex(sessionTTL)
+	letters = Client.Database("main").Collection("letters")
 	fmt.Println("Established connection to %s", letters)
+
+	// Specify the MaxTime option to limit the amount of time the operation can run on the server
+	opts := options.CreateIndexes().SetMaxTime(2 * time.Second)
+	_, errIn := letters.Indexes().CreateMany(ctx, models, opts)
+	if errIn != nil {
+		log.Fatal(errIn)
+	}
+
 }
 
-func insert(new schema.Letter) error {
-	return letters.Insert(new)
+func insert(new schema.Letter) (*mongo.InsertOneResult, error) {
+	return letters.InsertOne(context.Background(), new)
 }
 
 var UnauthorizedUser = errors.New("password is wrong or not provided")
@@ -57,7 +85,7 @@ func fetch(hash string, password string) (schema.JSONLetter, error) {
 	lookFor := bson.M{"hash": hash}
 
 	var result schema.Letter
-	err := letters.Find(lookFor).One(&result)
+	_ = letters.FindOne(context.TODO(), lookFor).Decode(&result)
 	jsonResult := schema.JSONLetter{
 		Hash:   result.Hash,
 		Title:  result.Title,
@@ -90,5 +118,5 @@ func fetch(hash string, password string) (schema.JSONLetter, error) {
 		}
 		jsonResult.Data = actualData
 	}
-	return jsonResult, err
+	return jsonResult, nil
 }

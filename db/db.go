@@ -25,7 +25,7 @@ func init() {
 	mUser := os.Getenv("MONGO_USER")
 	mPass := os.Getenv("MONGO_PASS")
 	mIP := os.Getenv("MONGO_SHARD_URL")
-
+	fmt.Println(mPass)
 	initSession(mUser, mPass, mIP)
 	fmt.Println(letters)
 }
@@ -77,7 +77,7 @@ func AddNew(title string, content []schema.LetterData, expiry string, password s
 	}
 
 	// fmt.Printf("%+v\n", new)
-	insertErr := insert(new)
+	_, insertErr := insert(new)
 	if insertErr != nil {
 		fmt.Println("Error inserting a new letter in the db: ", insertErr)
 	}
