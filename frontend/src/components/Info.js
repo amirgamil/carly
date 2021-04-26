@@ -1,7 +1,6 @@
 
 import img from '../../public/image.gif'
 import drive from '../../public/drive.gif'
-import Gif from './Gif.js'
 
 const Info = () => {
     return (
