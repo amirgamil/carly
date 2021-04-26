@@ -31,18 +31,8 @@ func initSession(user string, pass string, ip string) {
 		mongoURI,
 	))
 	if err != nil {
-		fmt.Println("Error starting Mongo session, ", err)
+		log.Println("Error starting Mongo session, ", err)
 	}
-
-	// uniqueHash := mgo.Index{
-	// 	Key:    []string{"hash"},
-	// 	Unique: true,
-	// }
-
-	// sessionTTL := mgo.Index{
-	// 	Key:         []string{"expiry"},
-	// 	ExpireAfter: 0,
-	// }
 
 	models := []mongo.IndexModel{
 		{
@@ -54,12 +44,6 @@ func initSession(user string, pass string, ip string) {
 			Options: options.Index().SetExpireAfterSeconds(0),
 		},
 	}
-	fmt.Println("success")
-	//create index with hash ready to put new elements in (idempotent operations, creates if doesn't exist, otherwise won't run)
-	//establishes connection to letters database only if unique key
-	//creates TTL so that mongodb automatically deletes entries past expiration date
-	// _ = Session.Database("main").Collection("letters").CreateIndex(uniqueHash)
-	// _ = Session.Database("main").Collection("letters").CreateIndex(sessionTTL)
 	letters = Client.Database("main").Collection("letters")
 	fmt.Println("Established connection to %s", letters)
 
@@ -67,7 +51,7 @@ func initSession(user string, pass string, ip string) {
 	opts := options.CreateIndexes().SetMaxTime(2 * time.Second)
 	_, errIn := letters.Indexes().CreateMany(ctx, models, opts)
 	if errIn != nil {
-		log.Fatal(errIn)
+		log.Println(errIn)
 	}
 
 }
@@ -99,22 +83,20 @@ func fetch(hash string, password string) (schema.JSONLetter, error) {
 		//get the key from the Salt in order to decrpt the message
 		key, _, err := security.DeriveKey(password, result.Salt)
 		if err != nil {
-			fmt.Println("Error calculating key to decrypt the message ", err)
-			panic(err)
+			log.Println("Error calculating key to decrypt the message ", err)
 		}
 
 		//decrypt the message and only return what is necessary (if no password, dont' care about Salt)
 		decryptedMessage, err := security.Decrypt(string(key), result.Data)
 		if err != nil {
-			fmt.Println("Error decrypting the message, ", err)
-			panic(err)
+			log.Println("Error decrypting the message, ", err)
 		}
 		jsonResult.Data = decryptedMessage
 	} else {
 		var actualData []schema.LetterData
 		errD := json.Unmarshal([]byte(result.Data), &actualData)
 		if errD != nil {
-			fmt.Println("Error converting decrypted data back to readable format ", errD)
+			log.Println("Error converting decrypted data back to readable format ", errD)
 		}
 		jsonResult.Data = actualData
 	}

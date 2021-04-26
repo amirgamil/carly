@@ -6,6 +6,7 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/amirgamil/carly/schema"
 	"golang.org/x/crypto/scrypt"
@@ -18,7 +19,7 @@ func Encrypt(key string, data []schema.LetterData) (string, error) {
 	//For more info, see https://www.youtube.com/watch?v=O4xNJsjtN6E&ab_channel=Computerphile
 	cipherBlock, err := aes.NewCipher([]byte(key))
 	if err != nil {
-		fmt.Println("Error creating a cipher key, ", err)
+		log.Println("Error creating a cipher key, ", err)
 	}
 
 	// wrap block cipher with Galois Counter Mode and standard nonce length
@@ -49,7 +50,7 @@ func Decrypt(key string, data string) ([]schema.LetterData, error) {
 	//similar to encrypt
 	cipherBlock, err := aes.NewCipher([]byte(key))
 	if err != nil {
-		fmt.Println("Error creating a cipher key, ", err)
+		log.Println("Error creating a cipher key, ", err)
 	}
 
 	// wrap block cipher with Galois Counter Mode and standard nonce length
@@ -70,7 +71,7 @@ func Decrypt(key string, data string) ([]schema.LetterData, error) {
 	var cardData []schema.LetterData
 	errM := json.Unmarshal(marshalledData, &cardData)
 	if err != nil {
-		fmt.Println("Error unmarshalling encrypted data ", errM)
+		log.Println("Error unmarshalling encrypted data ", errM)
 	}
 	return cardData, nil
 
@@ -94,7 +95,7 @@ func DeriveKey(password string, salt []byte) (string, []byte, error) {
 
 	derivedKey, err := scrypt.Key([]byte(password), salt, cpuLimit, relativeMemoryCost, relativeCPUCost, keyBytes)
 	if err != nil {
-		fmt.Println("Error getting a derived key ", err)
+		log.Println("Error getting a derived key ", err)
 		return "", nil, err
 	}
 	return string(derivedKey), salt, nil

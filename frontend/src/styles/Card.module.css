@@ -1,0 +1,25 @@
+.bodyLetter {
+    padding: 20px !important;
+    width: calc(100% - 1em);
+}
+
+.person {
+    padding-bottom: 10px;
+    font-size: 2em;
+}
+
+.image {
+    transform: rotate(-3deg);
+    width: 206px;
+    height: 206px;
+    padding: 0 !important;
+    margin-top: -50px !important;
+    margin-left: 10px !important;
+}
+
+.img {
+    height: 200px;
+    width: 200px;
+    padding: 0 !important;
+    object-fit: cover;
+}

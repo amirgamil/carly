@@ -12,7 +12,8 @@ const getLetter = async (id, password="") => {
                 redirect: 'follow'
             };
         }
-        return await fetch("http://127.0.0.1:8998/api/" + id, requestOptions)
+        const base = process.env.NEXT_PUBLIC_HOSTAPI;
+        return await fetch(base + "/" + id, requestOptions)
         .then(res => {
             if (res.status === 401) {
                 throw new Error("unauthorized password");

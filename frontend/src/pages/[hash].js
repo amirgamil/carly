@@ -67,7 +67,7 @@ const ViewLetter = ({ data, authenticated }) => {
         console.log(clientData.content);
         return (
             <Main>
-                <Letter template = {false} title={clientData.title} content={clientData.content}/>
+                {clientData.content ? <Letter template = {false} title={clientData.title} content={clientData.content}/> : null}
                 <Footer />
             </Main>
         )

@@ -3,6 +3,7 @@ package db
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -18,34 +19,30 @@ const ContentLimit = 100000
 func init() {
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Println("Error loading .env file: %s", err.Error())
-		panic(err)
+		log.Println("Error loading .env file: %s", err.Error())
 	}
 
 	mUser := os.Getenv("MONGO_USER")
 	mPass := os.Getenv("MONGO_PASS")
 	mIP := os.Getenv("MONGO_SHARD_URL")
-	fmt.Println(mPass)
 	initSession(mUser, mPass, mIP)
-	fmt.Println(letters)
 }
 
 func AddNew(title string, content []schema.LetterData, expiry string, password string) string {
 	titleArr := []byte(title)
 	err := checkLengths(title, content)
 	if err != nil {
-		fmt.Println(err)
-		panic(err)
+		log.Println(err)
 	}
 
 	urlHash := security.GenerateUniqueHash(string(titleArr[:20]))
 	expiryDate, err := time.Parse(time.RFC3339, expiry)
 	if err != nil {
-		fmt.Println("Error parsing the date %s", err)
+		log.Println("Error parsing the date %s", err)
 	}
 	marshalledContent, err := json.Marshal(content)
 	if err != nil {
-		fmt.Println("Error marshalling content")
+		log.Println("Error marshalling content")
 	}
 	new := schema.Letter{
 		Hash:     urlHash,
@@ -58,19 +55,19 @@ func AddNew(title string, content []schema.LetterData, expiry string, password s
 	if password != "" {
 		keyDer, salt, err := security.DeriveKey(password, nil)
 		if err != nil {
-			panic(err)
+			log.Println(err)
 		}
 		new.Salt = salt
 
 		encryptedContent, err := security.Encrypt(keyDer, content)
 		if err != nil {
-			fmt.Println("Error encrypting the content ", err)
+			log.Println("Error encrypting the content ", err)
 		}
 		new.Data = encryptedContent
 
 		hashedPassword, err := security.HashPassword(password)
 		if err != nil {
-			fmt.Println("Error hashing the password ", err)
+			log.Println("Error hashing the password ", err)
 		}
 		new.Password = hashedPassword
 

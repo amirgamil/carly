@@ -86,7 +86,8 @@ export default function Home() {
           }, ['title', 'expiry', 'password', 'content', 'person', 'msg', 'imgAdd']))
         .then(res => res.json())
         .then(data => {
-            setNewURL("http://localhost:3000/" + data.hash);
+            const newURL = process.env.NEXT_PUBLIC_HOST;
+            setNewURL(newURL + data.hash);
             togglePopUp(true);
         }).catch(exception => {
             console.log("Uh oh, error trying to save card to db " + exception);

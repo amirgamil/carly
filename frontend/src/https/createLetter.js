@@ -9,8 +9,9 @@ const createLetter = (data) => {
         },
         body: data
     };
-    console.log(data);
-    return fetch("http://127.0.0.1:8998/api", requestOptions);
+    const base = process.env.NEXT_PUBLIC_HOSTAPI;
+    console.log(process.env.NEXT_PUBLIC_HOSTAPI);
+    return fetch(base, requestOptions);
 }
 
 
