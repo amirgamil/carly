@@ -1,6 +1,7 @@
 
 import img from '../../public/image.gif'
 import drive from '../../public/drive.gif'
+import Gif from './Gif.js'
 
 const Info = () => {
     return (
@@ -21,19 +22,30 @@ const Info = () => {
             </p>
             <h1 className="cp"style={{fontSize: "2em"}}>Use cases</h1>
             <ul style={{fontSize: "1.5em"}}>
-                <li>Create a birthday letter for a family or friend</li>
+                <li>Creating any kind of letter (birthday, Christmas, wedding etc.) for a family or friend</li>
                 <li>Creating a thank you wall for a teacher, family or friend</li>
                 <li>Collecting some different short stories or pieces of writing</li>
+                <li>Showcasing the work of different students in the same class</li>
             </ul>
             <p style={{fontSize: "1.5em"}}>... many more, get creative!</p>
 
             <h1 className="cp"style={{fontSize: "2em"}}>Adding images</h1>
             <p style={{fontSize: "1.5em"}}>To add images, there are two options. One, you can find any image online and copy its image address
             like this</p>
-            <img src = {img}/>
+            {/*Code will be duplicated to reduce dependencies, otherwise need to install webpack file loader*/}
+            <div className="center-horiz">
+                <div class="block wrapper">
+                    <img class="gif" src = {img}/>
+                </div>
+            </div>
+            
             <p style={{fontSize: "1.5em"}}>Or, you can upload custom photos to google drive and get the image address from there like this
             (make sure to open the image in a new window!)</p>
-            <img src = {drive}/>
+            <div className="center-horiz">
+                <div class="block wrapper">
+                    <img class="gif" src = {drive}/>
+                </div>
+            </div>
 
             <h1 className="cp"style={{fontSize: "2em"}}>Support the project</h1>
             <p style={{fontSize: "1.5em"}}>If you found this project useful, consider supporting it <a 

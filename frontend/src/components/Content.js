@@ -17,7 +17,7 @@ export default function Content({placeholderTxt, content, onchange}) {
         <div className = "block-body">
             <TextInput className = "editor" placeholder = {placeholderTxt}
             onChange={(evt) => handleChange(evt)} value = {content} />
-            <p className = {`p-heights ${content.endsWith("\n") ? "newLine" : ""}`}>{content}</p>
+            <p className = {`p-heights ${content.endsWith("\n") ? "new-line" : ""}`}>{content}</p>
         </div>
     )
 }

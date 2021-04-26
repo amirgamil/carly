@@ -114,7 +114,7 @@ export default function Home() {
           <div className="" style={{marginTop: "3em", display: "flex", 
         flexDirection: "column", justifyContent: "space-between", 
         padding: "1em"}}>
-            <h1 className="cp">Let's make a digital letter!</h1>
+            <h1 id="makeLetter" className="cp">Let's make a digital letter!</h1>
             <OptionContainer>
                 <h1 className="option">Pick the title</h1>
                 <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
@@ -146,7 +146,7 @@ export default function Home() {
               </div>
               <div>
                 <p>Expiry</p>
-                <select name="expiry" id="expiry" onChange={(evt) => setExpiry(evt.target.value)}>
+                <select class="block" name="expiry" id="expiry" onChange={(evt) => setExpiry(evt.target.value)}>
                   <option value="day">1 day</option>
                   <option value="week">1 week</option>
                   <option value="month">1 month</option>
@@ -162,7 +162,7 @@ export default function Home() {
             </span>
             
         </div>
-        <hr style={{borderBottom: "4px dotted black", border: "0px", padding: "20px", display: "block" }}></hr>
+        <hr style={{borderBottom: "4px dotted black", border: "2px", padding: "20px", display: "block" }}></hr>
       </Container>
       <Footer />
     </>

@@ -1,5 +1,5 @@
-import ViewLetter from '../pages/[hash].js'
 import Letter from '../components/Letter'
+import Link from 'next/link'
 
 export default function Intro() {
     const tempData = [{
@@ -27,9 +27,11 @@ export default function Intro() {
                     Open it in your <span className="cp">browser!</span>
                 </h2>
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                    <button className="block" style={{fontSize: "1em"}}>
-                        Make one
-                    </button>
+                    <Link href="/#makeLetter" passHref>
+                        <a className="block" style={{fontSize: "1em"}}>
+                            Make one
+                        </a>
+                    </Link>
                     {/*TODO: ADD LINK*/}
                     <a href="add link" className="block" style={{fontSize: "1em"}}>
                         See an example

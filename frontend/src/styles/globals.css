@@ -76,7 +76,7 @@ input, textarea {
   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-.newLine {
+.new-line {
   padding-bottom: 1em !important;
 }
 
@@ -108,21 +108,22 @@ a:hover {
   text-decoration: underline;
 }
 
-/* section h2::after {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 0 4px;
-  transform: translateX(-4px);
-  border-radius: 3px;
-  content: '';
-  display: block;
-  height: 30%;
-  width: 100%;
-  background: var(--cp);
-  z-index: -1 !important;
-} */
+.center-horiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.gif {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .gif {
+    width: 80vw;
+  }
+}
 
 .cp {
   color: var(--cp);
@@ -159,5 +160,6 @@ a:hover {
 .block p {
   font-weight: normal !important;
 }
+
 
 
