@@ -34,7 +34,7 @@ const Main = styled.div`
     --bg: #f9f2e3;
     background: var(--bg);
     color: var(--fg);
-    height: 100%;
+    min-height: 100vh;
     font-family: 'Handlee', cursive;
 `;
 
@@ -62,7 +62,6 @@ const ViewLetter = ({ data, authenticated }) => {
     }
 
     if (isAuthenticated) {
-        console.log(clientData.content);
         return (
             <Main>
                 {clientData.content ? <Letter template = {false} title={clientData.title} content={clientData.content}/> : null}
