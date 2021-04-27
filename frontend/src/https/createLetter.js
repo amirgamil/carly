@@ -10,7 +10,6 @@ const createLetter = (data) => {
         body: data
     };
     const base = process.env.NEXT_PUBLIC_HOSTAPI;
-    console.log(process.env.NEXT_PUBLIC_HOSTAPI);
     return fetch(base, requestOptions);
 }
 

@@ -33,16 +33,16 @@ const Info = () => {
             like this</p>
             {/*Code will be duplicated to reduce dependencies, otherwise need to install webpack file loader*/}
             <div className="center-horiz">
-                <div class="block wrapper">
-                    <img class="gif" src = {img}/>
+                <div className="block wrapper" style={{display: "grid"}}>
+                    <img className="gif" src = {img}/>
                 </div>
             </div>
             
             <p style={{fontSize: "1.5em"}}>Or, you can upload custom photos to google drive and get the image address from there like this
             (make sure to open the image in a new window!)</p>
             <div className="center-horiz">
-                <div class="block wrapper">
-                    <img class="gif" src = {drive}/>
+                <div className="block wrapper" style={{display: "grid"}}>
+                    <img className="gif" src = {drive}/>
                 </div>
             </div>
 

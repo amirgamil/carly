@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-
-const TextInput = styled.textarea`
-    width: calc(100% - 2em);
-`;
+const Wrapper = styled.div`
+  display: block;
+  position: relative;
+  width: calc(100%);
+`
 
 export default function Content({placeholderTxt, content, onchange}) {
 
@@ -15,9 +16,9 @@ export default function Content({placeholderTxt, content, onchange}) {
 
     return (
         <div className = "block-body">
-            <TextInput className = "editor" placeholder = {placeholderTxt}
+            <textarea placeholder = {placeholderTxt}
             onChange={(evt) => handleChange(evt)} value = {content} />
-            <p className = {`p-heights ${content.endsWith("\n") ? "new-line" : ""}`}>{content}</p>
+            <pre className = {`p-heights ${content.endsWith("\n") ? "new-line" : ""}`}>{content}</pre>
         </div>
     )
 }

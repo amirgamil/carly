@@ -69,7 +69,7 @@ func fetch(hash string, password string) (schema.JSONLetter, error) {
 	lookFor := bson.M{"hash": hash}
 
 	var result schema.Letter
-	_ = letters.FindOne(context.TODO(), lookFor).Decode(&result)
+	_ = letters.FindOne(ctx, lookFor).Decode(&result)
 	jsonResult := schema.JSONLetter{
 		Hash:   result.Hash,
 		Title:  result.Title,

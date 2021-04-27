@@ -58,17 +58,19 @@ export default function Home() {
 
   function getExpiryDate() {
     var d = new Date();
+    console.log(expiry);
     if (expiry === "day") {
       d.setDate(d.getDate() + 1);
     } else if (expiry === "week") {
       d.setWeek(d.getWeek() + 1);
-    } else if (expiry === "mofnth") {
+    } else if (expiry === "month") {
       d.setMonth(d.getMonth() + 1);
     } else if (expiry === "year") {
       d.setFullYear(d.getFullYear() + 1);
-    } else if (expiry === "week") {
+    } else if (expiry === "years") {
       d.setFullYear(d.getFullYear() + 5);
     }
+    console.log(d.toISOString());
     return d.toISOString();
   }
 
@@ -111,58 +113,59 @@ export default function Home() {
       {popUp ? <PopUp url = {newURL} toggle = {togglePopUp}/> : null}
       <Container>
         <Info />
-          <div className="" style={{marginTop: "3em", display: "flex", 
-        flexDirection: "column", justifyContent: "space-between", 
-        padding: "1em"}}>
-            <h1 id="makeLetter" className="cp">Let's make a digital letter!</h1>
-            <OptionContainer>
-                <h1 className="option">Pick the title</h1>
-                <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
-                {cardStore.map((_, i) => {
-                  return <Entry key={i.toString()} index={i} nameLetter={cardStore[i].person} msg={cardStore[i].msg} 
-                  imgAdd={cardStore[i].imgAdd} dispatch={dispatch} />
-                  })}
-            </OptionContainer>
-            <OptionContainer>
-              <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", backgroundColor: "red"}} 
-                      onClick={() => dispatch({operation: "add"})}>
-                  +
-                </span>
-                <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} 
-                      onClick={() => decreaseNumberCards()}>
-                  -
-                </span>
-                
-              </div>
+        <hr style={{borderBottom: "dotted black", borderWidth: "0px 0px 4px", padding: "20px", display: "block", zIndex: "5"}}></hr>
+        <div style={{marginTop: "3em", display: "flex", 
+      flexDirection: "column", justifyContent: "space-between", 
+      padding: "1em", width: "100%"}}>
+          <h1 id="makeLetter" className="cp">Let's make a digital letter!</h1>
+          <OptionContainer>
+            <h1 className="option">Pick the title</h1>
+            <Text placeholderTxt="Enter the title of the page to display" value={titleLetter} onchange = {setTitleLetter}/>
+            {cardStore.map((_, i) => {
+              return <Entry key={i.toString()} index={i} nameLetter={cardStore[i].person} msg={cardStore[i].msg} 
+              imgAdd={cardStore[i].imgAdd} dispatch={dispatch} />
+              })}
+          </OptionContainer>
+          <OptionContainer>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+              <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", backgroundColor: "red"}} 
+                    onClick={() => dispatch({operation: "add"})}>
+                +
+              </span>
+              <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em"}} 
+                    onClick={() => decreaseNumberCards()}>
+                -
+              </span>
               
-            </OptionContainer>
-            
-            <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center", textAlign: "center"}}>
-              <div style={{width: "50%"}}>
-                <p>Password</p>
-                <input placeholder = "Enter a password if you'd like" type="password" 
-                       value={password} onChange={(evt) => setPassword(evt.target.value)}/>
-              </div>
-              <div>
-                <p>Expiry</p>
-                <select class="block" name="expiry" id="expiry" onChange={(evt) => setExpiry(evt.target.value)}>
-                  <option value="day">1 day</option>
-                  <option value="week">1 week</option>
-                  <option value="month">1 month</option>
-                  <option value="year">1 year</option>
-                  <option value="years">5 years</option>
-                </select>
-              </div>
-               
             </div>
-            <br/>
-            <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", margin: "0 auto"}} onClick={generateCard}>
-                Create
-            </span>
+            
+          </OptionContainer>
+          
+          <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center", textAlign: "center"}}>
+            <div style={{width: "50%"}}>
+              <p>Password</p>
+              <input placeholder = "Enter a password if you'd like" type="password" 
+                      value={password} onChange={(evt) => setPassword(evt.target.value)}/>
+            </div>
+            <div>
+              <p>Expiry</p>
+              <select className="block" name="expiry" id="expiry" onChange={(evt) => setExpiry(evt.target.value)}>
+                <option value="day">1 day</option>
+                <option value="week">1 week</option>
+                <option value="month">1 month</option>
+                <option value="year">1 year</option>
+                <option value="years">5 years</option>
+              </select>
+            </div>
+              
+          </div>
+          <br/>
+          <span className="block" style = {{width: "fit-content" ,marginTop: "20px", fontSize: "1.3em", margin: "0 auto"}} onClick={generateCard}>
+              Create
+          </span>
             
         </div>
-        <hr style={{borderBottom: "4px dotted black", border: "2px", padding: "20px", display: "block" }}></hr>
+        <hr style={{borderBottom: "dotted black", borderWidth: "0px 0px 4px", padding: "20px", display: "block", zIndex: "5"}}></hr>
       </Container>
       <Footer />
     </>

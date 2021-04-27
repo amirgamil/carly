@@ -34,8 +34,7 @@ const Main = styled.div`
     --bg: #f9f2e3;
     background: var(--bg);
     color: var(--fg);
-    min-height: 100vh;
-    width: 100%;
+    height: 100%;
     font-family: 'Handlee', cursive;
 `;
 
@@ -49,7 +48,6 @@ const ViewLetter = ({ data, authenticated }) => {
     const tryAuthenticating = () => {
         getLetter(hash.hash, password)
                .then(data => {
-                   console.log(data);
                    if (data.success === true) {
                        //need to set client data before we set authenticated which upon the rerender would still have 
                        //undefined data

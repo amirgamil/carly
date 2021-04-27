@@ -32,8 +32,7 @@ export default function Intro() {
                             Make one
                         </a>
                     </Link>
-                    {/*TODO: ADD LINK*/}
-                    <a href="add link" className="block" style={{fontSize: "1em"}}>
+                    <a href="https://carly.amirbolous.com/166989a" className="block" style={{fontSize: "1em"}}>
                         See an example
                     </a>
                 </div>

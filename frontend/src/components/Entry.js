@@ -31,7 +31,7 @@ const Entry = ({index, nameLetter, msg, imgAdd, dispatch}) => {
     return (
         <OptionContainer>
             <h2>Card {index + 1}</h2>
-            <div className="block wrapper" style={{padding: "0 1em 2em 1em"}}>
+            <div className="block wrapper" style={{padding: "0 1em 2em 1em", width: "100%"}}>
                 <OptionContainer>
                     <h1 className="option">Who's this from?</h1>
                     <p>Enter your name to display at the top of your letter</p>
@@ -44,7 +44,7 @@ const Entry = ({index, nameLetter, msg, imgAdd, dispatch}) => {
                 </OptionContainer>
                 <OptionContainer>
                     <h1 className="option">Enter an image address</h1>
-                    <p>Unfortunately, we don't support directly uploading images, but any image link (google drive etc.) works!</p>
+                    <p>If you're unsure, scroll up to the adding images section!</p>
                     <Text key={"name" + index} placeholderTxt="Enter an image address" value={imgAdd} onchange = {updateImgAdd}/>
                 </OptionContainer>
             </div>

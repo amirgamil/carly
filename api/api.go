@@ -11,6 +11,7 @@ import (
 )
 
 func preflightResponse(w *http.ResponseWriter, r *http.Request) {
+	//if in production, replace with https://carly.amirbolous.com
 	(*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
