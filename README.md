@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Carly
+#### Genereate beautiful letters for your loved ones that can be shared in seconds
+![Homepage]()
+![Letter example]()
 
-## Getting Started
+## Public API
+Carly provides a public API that can be accessed at  `https://apicarly.amirbolous.com`. The API provides the following endpoints
 
-First, run the development server:
 
+### `POST /api`
 ```bash
-npm run dev
-# or
-yarn dev
+# create a new letter
+curl -H "Content-Type: application/json" \
+  --request POST \
+  --data '{"title":"letter title", "expiry":"2021-10-05T14:48:00.000Z", "password":"",  \
+           "content": {"person":"a", "msg":"msg", "imgAdd":"imgurl"}}' \
+  https://apicarly.amirbolous.com/api
+
+# or with a password
+curl -H "Content-Type: application/json" \
+  --request POST \
+  --data '{"title":"letter title", "expiry":"2021-10-05T14:48:00.000Z", "password":"password",  \
+           "content": {"person":"a", "msg":"msg", "imgAdd":"imgurl"}}' \
+  https://apicarly.amirbolous.com/api
+
+# 200 OK
+# > { "hash": "6Z7NVVv" }
+
+# 400 BAD_REQUEST
+# happens when title/body is too long, password couldnt
+# be hashed, or expiry is not in RFC3339 format
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Fix this
+### `GET /api/{hash}`
+```bash
+# get unprotected hash
+curl https://apicarly.amirbolous.com/api/166989a
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+# 200 OK
+# > {
+# >   "content": "print(\"test content\")",
+# >   "expiry": "2021-03-09T01:02:43.082Z",
+# >   "language": "python",
+# >   "timestamp": "2021-03-02T01:06:16.209501971Z",
+# >   "title": "test paste"
+# > }
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+# 401 BAD_REQUEST
+# happens when paste is password protected. when this happens, try the authenticated alternative using POST
+# 404 NOT_FOUND
+# no paste with that ID found
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Details
+Carly is written in Next.js + React on the frontend (hosted on Vercel) and Go with MongoDB Atlas on the backend (hosted as a systemd file with nginx on Digital Ocean)
