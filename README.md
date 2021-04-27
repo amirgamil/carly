@@ -1,8 +1,12 @@
 # Carly ✉️
 #### Genereate beautiful letters for your loved ones that can be shared in seconds
-Carly was written to help me send a birthday letter to my mum halfway around the world. Now anyone can do it too :)
-![Home Page](https://user-images.githubusercontent.com/7995105/116179665-bb001b00-a6e5-11eb-85a4-099657924012.png)
-![Making a Letter](https://user-images.githubusercontent.com/7995105/116179662-ba678480-a6e5-11eb-90c9-a204049b032a.png)
+Carly was written to help me send a birthday letter to my mum halfway around the world. Now anyone can do it too!
+
+
+![letter1](https://user-images.githubusercontent.com/7995105/116254324-3fcb5300-a73f-11eb-8398-fcf53bd9d1dc.png)
+![letter2](https://user-images.githubusercontent.com/7995105/116254322-3f32bc80-a73f-11eb-8f33-059b34550093.png)
+![letter3](https://user-images.githubusercontent.com/7995105/116254321-3f32bc80-a73f-11eb-955c-64624f298e41.png)
+![letter4](https://user-images.githubusercontent.com/7995105/116254320-3f32bc80-a73f-11eb-984d-0e01913439f5.png)
 
 ## Details
 Carly is written in Next.js + React on the frontend (hosted on Vercel) and Go with MongoDB Atlas on the backend (hosted as a systemd file with nginx on Digital Ocean).
