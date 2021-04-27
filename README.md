@@ -1,6 +1,8 @@
 # Carly ✉️
 #### Genereate beautiful letters for your loved ones that can be shared in seconds
-Carly was written to help me send a birthday letter to my mum halfway around the world. Now anyone can do it too :)
+Carly was written to help me send a birthday letter to my mum halfway around the world. Now anyone can do it too!
+
+
 ![letter1](https://user-images.githubusercontent.com/7995105/116254324-3fcb5300-a73f-11eb-8398-fcf53bd9d1dc.png)
 ![letter2](https://user-images.githubusercontent.com/7995105/116254322-3f32bc80-a73f-11eb-8f33-059b34550093.png)
 ![letter3](https://user-images.githubusercontent.com/7995105/116254321-3f32bc80-a73f-11eb-955c-64624f298e41.png)
