@@ -8,18 +8,58 @@
     font-size: 2em;
 }
 
+
+@media (max-width: 600px) {
+    .cardText {
+        font-size: 1em;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .image {
+        width: 106px;
+        height: 106px;
+        margin-left: 30px;
+    }
+
+    .img {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+
+@media (min-width: 600px) {
+    .cardText {
+        font-size: 1.5em;
+        margin-top: 15px;
+    }
+
+    .image {
+        width: 206px;
+        height: 206px;
+        margin-left: 10px;
+    }
+
+    .img {
+        height: 200px;
+        width: 200px;
+    }
+}
+
+
+
+.cardText {
+    white-space: pre-line;
+}
+
 .image {
     transform: rotate(-3deg);
-    width: 206px;
-    height: 206px;
     padding: 0 !important;
     margin-top: -50px !important;
-    margin-left: 10px !important;
 }
 
 .img {
-    height: 200px;
-    width: 200px;
     padding: 0 !important;
     object-fit: cover;
 }

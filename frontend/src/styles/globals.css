@@ -71,18 +71,14 @@ textarea {
 
 }
 
-input {
-  padding: 1em;
-}
-
 
 input, textarea, .p-heights {
-  width: 100%;
+  width: 100% !important;
   background-color: var(--bg);
+  padding: 0.75em;
   border: 1px solid black;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-size: 1em;
 }
 
 .p-heights.new-line {
@@ -91,7 +87,6 @@ input, textarea, .p-heights {
 
 textarea, .p-heights {
     box-sizing: border-box;
-    padding: 0.75em;
     color: var(--fg);
     min-height: 3em;
     margin: 0;
@@ -128,15 +123,80 @@ a:hover {
   margin: 0 auto;
 }
 
+
+
 @media (max-width: 600px) {
   .gif {
     width: 80vw;
+  }
+  .headerIntro {
+    font-size: 2em;
+  }
+
+  .subheaderIntro {
+    font-size: 1em;
+    margin-top: -1em;
+  }
+  
+  .infoTitle {
+    font-size: 1.5em;
+  }
+  
+  .infoText {
+    font-size: 1.2em;
+  }
+
+  input, textarea, .p-heights {
+    font-size: 0.8em;
+  }
+
+  .password {
+    width: 100%
+  }
+  
+  .passwordContainer {
+    width: calc(100% - 2em);
+  }
+}
+
+@media (min-width: 600px) {
+  .headerIntro {
+    font-size: 3em;
+  }  
+
+  .subheaderIntro {
+    font-size: 2em;
+  }
+
+  .infoTitle {
+    font-size: 2em;
+  }
+  
+  .infoText {
+    font-size: 1.5em;
+  }
+
+  input, textarea, .p-heights{
+    font-size: 1em;
+  }
+  
+  .passwordContainer {
+    width: 50%;
   }
 }
 
 .cp {
   color: var(--cp);
 }
+
+.headerIntro {
+  padding: 0 20px 0 20px;
+}
+
+.subheaderIntro {
+  position: relative;
+}
+
 /*Modal content*/
 
 .option {

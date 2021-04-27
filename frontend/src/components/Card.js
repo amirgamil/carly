@@ -9,7 +9,7 @@ const Card = ({data}) => {
                 <div className={`wrapper block ${styles.image}`}>
                     <img className = {`${styles.img}`}src={data.imgAdd} />
                 </div> 
-                <p style= {{ fontSize: "1.5em", whiteSpace: "pre-line", marginTop: "15px"}}>
+                <p className={styles.cardText}>
                 {data.msg}
                 </p>
             </div>

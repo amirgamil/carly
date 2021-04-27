@@ -3,6 +3,7 @@ import '../styles/blocks.css'
 import Head from "next/head";
 
 const MyApp = ({ Component, pageProps }) => {
+  const title = pageProps["authenticated"] === true ? pageProps.data.title : "carly | letters for your loved ones"
   return (
     <>
       <Head>
@@ -12,7 +13,7 @@ const MyApp = ({ Component, pageProps }) => {
           content="genereate beautiful letters for your loved ones"
         />
         <link rel="icon" href="/favicon.png" />
-        <title>carly | letters for your loved ones</title>
+        <title>{title}</title>
       </Head>
       <Component {...pageProps} />
     </>

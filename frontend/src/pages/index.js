@@ -142,9 +142,9 @@ export default function Home() {
           </OptionContainer>
           
           <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: "center", textAlign: "center"}}>
-            <div style={{width: "50%"}}>
+            <div className="passwordContainer">
               <p>Password</p>
-              <input placeholder = "Enter a password if you'd like" type="password" 
+              <input className="password"placeholder = "Enter a password if you'd like" type="password" 
                       value={password} onChange={(evt) => setPassword(evt.target.value)}/>
             </div>
             <div>
