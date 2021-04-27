@@ -1,7 +1,7 @@
 # Carly
 #### Genereate beautiful letters for your loved ones that can be shared in seconds
-![Homepage]()
-![Letter example]()
+<img width="1431" alt="home" src="https://user-images.githubusercontent.com/7995105/116178284-43c98780-a6e3-11eb-8f21-fad5f568224d.png">
+<img width="1426" alt="letter" src="https://user-images.githubusercontent.com/7995105/116178307-50e67680-a6e3-11eb-9aee-2fbafc66a886.png">
 
 ## Public API
 Carly provides a public API that can be accessed at  `https://apicarly.amirbolous.com`. The API provides the following endpoints
