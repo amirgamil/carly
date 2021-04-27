@@ -30,6 +30,8 @@ curl -H "Content-Type: application/json" \
 # happens when title/body is too long, password couldnt
 # be hashed, or expiry is not in RFC3339 format
 ```
+
+Fix this
 ### `GET /api/{hash}`
 ```bash
 # get unprotected hash
