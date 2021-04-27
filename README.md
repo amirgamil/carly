@@ -15,7 +15,7 @@ To run this locally, you will need to run the web server in Go (using `go run ma
 
 You will also need a MongoDB atlas account (free tier M0 can be accessed by anyone). Once you've made an account, configure a user with admin access and store the username, password, and shared URL in a .env file with MONGO_USER, MONGO_PASS, MONGO_SHARD_URL as the variable names respectively. Make sure that this .env file is located in the same directory as the go.mod file.
 
-You will also need to create a .env.local file and populate it with two variables 
+You will also need to create a .env.local file inside the frontend folder and populate it with two variables 
 `NEXT_PUBLIC_HOST=localhost:3000
 NEXT_PUBLIC_HOSTAPI=127.0.0.1:port/api`
 You can select any port like 8998. 
