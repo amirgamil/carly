@@ -15,7 +15,7 @@ export default function Content({placeholderTxt, content, onchange}) {
     }
 
     return (
-        <div className = "block-body">
+        <div className = "blockBody">
             <textarea placeholder = {placeholderTxt}
             onChange={(evt) => handleChange(evt)} value = {content} />
             <pre className = {`p-heights ${content.endsWith("\n") ? "new-line" : ""}`}>{content}</pre>

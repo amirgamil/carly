@@ -1,5 +1,6 @@
-# Carly
+# Carly ✉️
 #### Genereate beautiful letters for your loved ones that can be shared in seconds
+Carly was written to help me send a birthday letter to my mum halfway around the world. Now anyone can do it too :)
 ![Home Page](https://user-images.githubusercontent.com/7995105/116179665-bb001b00-a6e5-11eb-85a4-099657924012.png)
 ![Making a Letter](https://user-images.githubusercontent.com/7995105/116179662-ba678480-a6e5-11eb-90c9-a204049b032a.png)
 
@@ -15,6 +16,51 @@ You will also need to create a .env.local file and populate it with two variable
 NEXT_PUBLIC_HOSTAPI=127.0.0.1:port/api`
 You can select any port like 8998. 
 
+## API
 The API provides two endpoints 
 ### `POST /api`
+- Accepts a JSON body that looks like this:
+`{
+  "title": "titleLetter",
+  "expiry": "getExpiryDate()", 
+  "password": "",
+  "content": [
+    {
+    "person": "person1",
+    "msg": "msg1",
+    "imgAdd": "imgAdd1"
+   },
+   {
+     "person":"person2",
+     "msg": "msg2",
+     "imgAdd": "imgAdd2"
+   }...
+  ]
+}`
+
+The API returns the genereated hash if successful
+`#200 OK
+#{ "hash": "166989a"}`
+
 ### `GET /api/{hash}`
+The API returns
+`#401 Unauthorized` if the letter is password protected
+
+OR 
+
+`#404 Bad request` if it does not find the hash in the database (or for any other possible error)
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+## Acknowledgements
+* [Ctrl-v](https://github.com/jackyzha0/ctrl-v)
+* [Block CSS](https://thesephist.github.io/blocks.css/)

@@ -13,7 +13,7 @@ const Info = () => {
                 accessed on the browser and shared easily across all devices.
                 <br/><br/>
                 If you would like to have several different cards from different people on the same page
-                like <a href="">this</a>, click on the add another person in the make card section. These can be addressed
+                like <a href="https://carly.amirbolous.com/166989a">this</a>, click on the + button in the make card section. These can be addressed
                 to the same person, or just a collection of different cards.
                 <br/><br/>
 
@@ -38,7 +38,7 @@ const Info = () => {
                 </div>
             </div>
             
-            <p style={{fontSize: "1.5em"}}>Or, you can upload custom photos to google drive and get the image address from there like this
+            <p style={{fontSize: "1.5em"}}>Or, you can upload custom photos to Google Drive and get the image address from there like this
             (make sure to open the image in a new window!)</p>
             <div className="center-horiz">
                 <div className="block wrapper" style={{display: "grid"}}>
