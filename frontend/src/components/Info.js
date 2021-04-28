@@ -14,7 +14,10 @@ const Info = () => {
                 <br/><br/>
                 If you would like to have several different cards from different people on the same page
                 like <a href="https://carly.amirbolous.com/166989a">this</a>, click on the + button in the make card section. These can be addressed
-                to the same person, or just a collection of different cards.
+                to the same person, or just a collection of different cards. 
+                <br/><br/>
+                <a href="https://carly.amirbolous.com/79f2ae9">This</a> is an example
+                of a single card letter (and the first one publicly made on Carly)!
                 <br/><br/>
 
 
