@@ -13,7 +13,6 @@
     .cardText {
         font-size: 1em;
         margin-top: 10px;
-        padding-top: 10px;
     }
 
     .image {
@@ -51,6 +50,7 @@
 
 .cardText {
     white-space: pre-line;
+    padding-top: 10px;
 }
 
 .image {
