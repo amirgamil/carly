@@ -62,7 +62,7 @@ export default function Home() {
     if (expiry === "day") {
       d.setDate(d.getDate() + 1);
     } else if (expiry === "week") {
-      d.setWeek(d.getWeek() + 1);
+      d.setDate(d.getWeek() + 1 * 7);
     } else if (expiry === "month") {
       d.setMonth(d.getMonth() + 1);
     } else if (expiry === "year") {
